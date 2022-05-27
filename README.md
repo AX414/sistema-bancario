@@ -1,7 +1,7 @@
 Lista de Coisas pra terminar:
 
 
-<h1>Banco:</h1>
+<h1>Banco: Feito</h1>
 <ul>
 	<li>Modelgagem (Feito)</li>
 	<li>Script (Feito)</li>
