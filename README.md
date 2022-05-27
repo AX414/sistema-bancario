@@ -9,7 +9,7 @@ Lista de Coisas pra terminar:
 
 <h1>Modelos:</h1>
 <ul>
-	<li>Cliente (Feito)</li>
+	<li>Cliente</li>
 	<li>Agência</li>
 	<li>Transferência</li>
 	<li>Depósito</li>
