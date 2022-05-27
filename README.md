@@ -5,22 +5,42 @@ Lista de Coisas pra terminar:
 
 
 
-- Banco:
-	1- Modelgagem (Feito)
-	2- Script (Feito)
-- Modelos:
-	1- Cliente (Feito)
-	2- Agência
-	3- Conta
-	4- Depósito
-	5- Funcionário
-	6- Saque
-	7- Transferencia
+<h1>Banco:</h1>
+<ul>
+	<li>Modelgagem (Feito)</li>
+	<li>Script (Feito)</li>
+</ul>
 
-- Controles:
-	?- CRUD de Clientes          (Se tiver, vai ter que vincular o Funcionário ao Cliente)
-	?- CRUD de Funcionário 
-	1- Efetuar Depósito
-	2- Efetuar Saque
-	3- Efetuar Transferência
+<h1>Modelos:</h1>
+<ul>
+	<li>Cliente (Feito)</li>
+	<li>Agência</li>
+	<li>Trnasferência</li>
+	<li>Depósito</li>
+	<li>Saque</li>
+	<li>Funcionário</li>
+	<li>Conta</li>
+</ul>
 
+<h1> Controles:</h1>
+<ul>
+	<li>Efetuar Depósito</li>
+	<li>Efetuar Saque</li>
+	<li>Efetuar Transferência</li>
+</ul>
+
+<h1>Páginas:</h1>
+<ul>
+	<li>Tela de Login</li>
+	<li>Tela Principal</li>
+	<li>Tela de Saque</li>
+	<li>Tela de Depósito</li>
+	<li>Tela de Transferência</li>
+</ul>
+
+<hr>
+<h1>Dúvidas:</h1>
+<ul>
+	<li>CRUD de Clientes (Se tiver, vai ter que vincular o Funcionário ao Cliente)</li>
+	<li>CRUD de Funcionário</li>
+</ul>
