@@ -1,0 +1,50 @@
+2 tipos de contas (
+Especial - tem limite para uso do cliente e 0 taxa para uso
+Comum - nenhum limite e com taxa?
+)
+
+-Diversas agencias
+
+1 cliente pode ter diversas contas
+todas as contas podem fazer saques, depósitos e transferencias
+
+- Saques e transferências:
+    - Na conta comum podem ser realizadas somente se possuir saldo suficiente;
+    - Na conta especial podem ser realizadas até o valor do limite (saldo + limite).
+- Os depósitos podem ser realizados:
+    - Com um funcionário no caixa e o valor fica disponível no ato;
+    - No caixa eletrônico com o uso de um envelope e o valor somente fica disponível após a conferência por um funcionário.
+
+==============================================================================
+Cliente (id_cliente, nome, cpf, senha) 
+-----> Possui diversas contas
+
+Conta  (id_conta, id_agencia, tipo, limite, taxa, saldo) 
+-----> Pode realizar diversas transferencias, saques e depositos
+
+Agência(id_agencia, nome, número)
+
+Saque(id_saque, id_Cliente, id_conta, valor a ser sacado, data do saque)
+-----> Na conta comum é realizada se tiver esse saldo
+         Na conta especial é realizada até o valor do limite (saldo + limite)
+
+Deposito(id_deposito, id_Cliente, id_conta, valor a ser depositdo, data do deposito, tipo) 
+-----> Tipo de deposito diz se ele vai ser com um funcionário e o 
+         Valor fica disponível na hora, ou no caixa com o envelope e o 
+         Valor só é disponibilizado depois do funcionário conferir.
+
+
+Transferencia(id_transferencia, id_cliente que vai mandar, id_cliente que vai receber, 
+id_conta de quem manda, id_conta de quem recebe, id_agencia, valor a ser transferido).
+-----> Na conta comum é realizada se tiver esse saldo
+         Na conta especial é realizada até o valor do limite (saldo + limite)
+
+
+**O sistema deve permitir:**
+
+- O cliente tirar um extrato por período.
+- O funcionário autorizar os depósitos feitos pelo envelope.
+- O funcionário imprimir um relatório com todas as contas que estão utilizando o valor do limite.
+
+
+
