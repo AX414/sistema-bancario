@@ -1,8 +1,4 @@
-# projetoFP2
- 
-
 Lista de Coisas pra terminar:
-
 
 
 <h1>Banco:</h1>
