@@ -11,7 +11,7 @@ Lista de Coisas pra terminar:
 <ul>
 	<li>Cliente (Feito)</li>
 	<li>Agência</li>
-	<li>Trnasferência</li>
+	<li>Transferência</li>
 	<li>Depósito</li>
 	<li>Saque</li>
 	<li>Funcionário</li>
