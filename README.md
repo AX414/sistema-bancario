@@ -1,10 +1,10 @@
 Lista de Coisas pra terminar:
 
 
-<h1>Banco: Feito</h1>
+<h1>Banco: </h1>
 <ul>
-	<li>Modelgagem (Feito)</li>
-	<li>Script (Feito)</li>
+	<li>Modelgagem</li>
+	<li>Script</li>
 </ul>
 
 <h1>Modelos:</h1>
@@ -39,4 +39,6 @@ Lista de Coisas pra terminar:
 <ul>
 	<li>CRUD de Clientes (Se tiver, vai ter que vincular o Funcionário ao Cliente)</li>
 	<li>CRUD de Funcionário</li>
+	<li>Se vou precisar de uma classe abstrata de usuário</li>
+	<li>se vou deixar taxa nas contas</li>
 </ul>
