@@ -1,4 +1,4 @@
-Lista de Coisas pra terminar:
+Lista de Coisas pra terminar e anotações:
 
 
 <h1>Banco: </h1>
@@ -40,5 +40,5 @@ Lista de Coisas pra terminar:
 	<li>CRUD de Clientes (Se tiver, vai ter que vincular o Funcionário ao Cliente)</li>
 	<li>CRUD de Funcionário</li>
 	<li>Se vou precisar de uma classe abstrata de usuário</li>
-	<li>se vou deixar taxa nas contas</li>
+	<li>Se vou deixar taxa nas contas</li>
 </ul>
