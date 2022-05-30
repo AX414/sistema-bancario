@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Tela Principal</title>
+        <h:outputStylesheet name="/css/primeflex.min.css" />
+        <h:outputStylesheet name="/css/estilo.css" />
+    </h:head>
+    <h:body>
+        <h:form style="fixed: top; margin:30px 30px;">
+            <p:menubar>
+                <p:submenu label="File" icon="pi pi-fw pi-file">
+                    <p:submenu label="New" icon="pi pi-fw pi-plus">
+                        <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
+                        <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
+                    </p:submenu>
+                    <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
+                    <p:divider />
+                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                </p:submenu>
+
+                <f:facet name="options">
+                    <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+        <p:card class="card">
+            <f:facet name="title">
+                Nome do User
+            </f:facet>
+        </p:card>
+    </h:body>
+</html>
+
