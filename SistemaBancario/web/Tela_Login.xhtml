@@ -10,44 +10,44 @@
         <h:outputStylesheet name="/css/style.css" />
     </h:head>
     <h:body>
-
+        <p:growl id="growl" showDetail="true"/>
         <p:card class="card">
-            <f:facet name="title">
-                LOGIN:
-            </f:facet>
-            <div class="ui-fluid">
-                <div class="p-field p-grid">
-                    <label for="idConta" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
-                    <div class="p-col-12 p-md-10">
-                        <p:inputText id="idConta" type="text" />
+            <h:form>
+                <h1>
+                    LOGIN:
+                </h1>
+                <div class="ui-fluid">
+                    <div class="p-field p-grid">
+                        <label for="cpf" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">CPF</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputMask id="cpf" value="#{usuarioController.usuario.cpf}" mask="999.999.999-99" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Senha</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:password id="senha" value="#{usuarioController.usuario.senha}"/>
+                        </div>
                     </div>
                 </div>
+
                 <div class="p-field p-grid">
-                    <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Senha</label>
+                    <label for="nivelAcesso" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nível de Acesso</label>
                     <div class="p-col-12 p-md-10">
-                        <p:password id="senha"/>
+                        <p:selectOneMenu id="option" value="#{usuarioController.usuario.nivelAcesso}">
+                            <f:selectItem itemLabel="Cliente" itemValue="Cliente"/>
+                            <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
+                            <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
+                        </p:selectOneMenu>
                     </div>
                 </div>
-            </div>
 
-            <div class="p-field p-grid">
-                <label for="nivel" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nível de Acesso</label>
-                <div class="p-col-12 p-md-10">
-                    <p:selectOneMenu id="option" value="">
-                        <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItem itemLabel="Cliente" itemValue="Cliente"/>
-                        <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
-                    </p:selectOneMenu>
-                </div>
-            </div>
 
-            <f:facet name="footer">
-                <p:commandButton icon="pi pi-check" value="Entrar"/>
+                <p:commandButton icon="pi pi-check" value="Entrar" action="#{usuarioController.autenticar()}" update="growl"/>
                 <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-danger" style="margin-left: .5em"/>
-            </f:facet>
-            
-        </p:card>
 
+            </h:form>
+        </p:card>
     </h:body>
 </html>
 

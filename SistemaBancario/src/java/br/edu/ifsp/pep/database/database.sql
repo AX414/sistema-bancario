@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS Usuario (
   PRIMARY KEY (idUsuario))
 ENGINE = InnoDB;
 
+INSERT INTO Usuario VALUES(1,"João Porcel","123456","441.441.441-41","Cliente","Bairro A","Rua A","(18)98134-3434","jp@hotmail.com");
+
 DROP TABLE IF EXISTS Agencia ;
 
 CREATE TABLE IF NOT EXISTS Agencia (
