@@ -1,23 +1,26 @@
-DROP DATABASE IF EXISTS banco ;
-CREATE DATABASE IF NOT EXISTS banco;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+DROP SCHEMA IF EXISTS banco ;
+CREATE SCHEMA IF NOT EXISTS banco DEFAULT CHARACTER SET utf8 ;
 USE banco ;
 
-DROP TABLE IF EXISTS Cliente ;
+DROP TABLE IF EXISTS Usuario ;
 
-CREATE TABLE IF NOT EXISTS Cliente (
-  idCliente INT NOT NULL,
+CREATE TABLE IF NOT EXISTS Usuario (
+  idUsuario INT NOT NULL,
   nome VARCHAR(45) NOT NULL,
+  senha VARCHAR(45) NOT NULL,
+  cpf VARCHAR(45) NOT NULL,
+  nivelAcesso VARCHAR(45) NOT NULL,
   bairro VARCHAR(45) NOT NULL,
   rua VARCHAR(45) NOT NULL,
   contato VARCHAR(45) NOT NULL,
   email VARCHAR(45) NULL,
-  PRIMARY KEY (idCliente))
+  PRIMARY KEY (idUsuario))
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table Agencia
--- -----------------------------------------------------
 DROP TABLE IF EXISTS Agencia ;
 
 CREATE TABLE IF NOT EXISTS Agencia (
@@ -27,10 +30,6 @@ CREATE TABLE IF NOT EXISTS Agencia (
   PRIMARY KEY (idAgencia))
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table Conta
--- -----------------------------------------------------
 DROP TABLE IF EXISTS Conta ;
 
 CREATE TABLE IF NOT EXISTS Conta (
@@ -39,14 +38,12 @@ CREATE TABLE IF NOT EXISTS Conta (
   tipo VARCHAR(45) NOT NULL,
   limite DOUBLE NOT NULL,
   saldo DOUBLE NOT NULL,
-  Cliente_idCliente INT NOT NULL,
+  Usuario_idUsuario INT NOT NULL,
   Agencia_idAgencia INT NOT NULL,
   PRIMARY KEY (idConta),
-  INDEX fk_Conta_Cliente_idx (Cliente_idCliente ASC) VISIBLE,
-  INDEX fk_Conta_Agencia1_idx (Agencia_idAgencia ASC) VISIBLE,
   CONSTRAINT fk_Conta_Cliente
-    FOREIGN KEY (Cliente_idCliente)
-    REFERENCES Cliente (idCliente)
+    FOREIGN KEY (Usuario_idUsuario)
+    REFERENCES Usuario (idUsuario)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_Conta_Agencia1
@@ -56,24 +53,10 @@ CREATE TABLE IF NOT EXISTS Conta (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE INDEX fk_Conta_Cliente_idx ON Conta (Usuario_idUsuario ASC) VISIBLE;
 
--- -----------------------------------------------------
--- Table Funcionario
--- -----------------------------------------------------
-DROP TABLE IF EXISTS Funcionario ;
+CREATE INDEX fk_Conta_Agencia1_idx ON Conta (Agencia_idAgencia ASC) VISIBLE;
 
-CREATE TABLE IF NOT EXISTS Funcionario (
-  idFuncionario INT NOT NULL,
-  nome VARCHAR(45) NOT NULL,
-  senha VARCHAR(45) NOT NULL,
-  tipo VARCHAR(45) NOT NULL,
-  PRIMARY KEY (idFuncionario))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table Saque
--- -----------------------------------------------------
 DROP TABLE IF EXISTS Saque ;
 
 CREATE TABLE IF NOT EXISTS Saque (
@@ -81,21 +64,16 @@ CREATE TABLE IF NOT EXISTS Saque (
   valor DOUBLE NOT NULL,
   dataSaque DATE NOT NULL,
   Conta_idConta INT NOT NULL,
-  Conta_idCliente INT NOT NULL,
-  Conta_idAgencia INT NOT NULL,
   PRIMARY KEY (idSaque),
-  INDEX fk_Saque_Conta1_idx (Conta_idConta ASC, Conta_idCliente ASC, Conta_idAgencia ASC) VISIBLE,
   CONSTRAINT fk_Saque_Conta1
-    FOREIGN KEY (Conta_idConta , Conta_idCliente , Conta_idAgencia)
-    REFERENCES Conta (idConta , Cliente_idCliente , Agencia_idAgencia)
+    FOREIGN KEY (Conta_idConta)
+    REFERENCES Conta (idConta)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE INDEX fk_Saque_Conta1_idx ON Saque (Conta_idConta ASC) VISIBLE;
 
--- -----------------------------------------------------
--- Table Deposito
--- -----------------------------------------------------
 DROP TABLE IF EXISTS Deposito ;
 
 CREATE TABLE IF NOT EXISTS Deposito (
@@ -105,28 +83,16 @@ CREATE TABLE IF NOT EXISTS Deposito (
   dataDeposito DATE NOT NULL,
   dataAutorizacao DATE NULL,
   Conta_idConta INT NOT NULL,
-  Conta_idCliente INT NOT NULL,
-  Conta_idAgencia INT NOT NULL,
-  Funcionario_idFuncionario INT NULL,
   PRIMARY KEY (idDeposito),
-  INDEX fk_Deposito_Conta1_idx (Conta_idConta ASC, Conta_idCliente ASC, Conta_idAgencia ASC) VISIBLE,
-  INDEX fk_Deposito_Funcionario1_idx (Funcionario_idFuncionario ASC) VISIBLE,
   CONSTRAINT fk_Deposito_Conta1
-    FOREIGN KEY (Conta_idConta , Conta_idCliente , Conta_idAgencia)
-    REFERENCES Conta (idConta , Cliente_idCliente , Agencia_idAgencia)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT fk_Deposito_Funcionario1
-    FOREIGN KEY (Funcionario_idFuncionario)
-    REFERENCES Funcionario (idFuncionario)
+    FOREIGN KEY (Conta_idConta)
+    REFERENCES Conta (idConta)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE INDEX fk_Deposito_Conta1_idx ON Deposito (Conta_idConta ASC) VISIBLE;
 
--- -----------------------------------------------------
--- Table Transferencia
--- -----------------------------------------------------
 DROP TABLE IF EXISTS Transferencia ;
 
 CREATE TABLE IF NOT EXISTS Transferencia (
@@ -134,19 +100,19 @@ CREATE TABLE IF NOT EXISTS Transferencia (
   data DATE NOT NULL,
   valor DOUBLE NOT NULL,
   idConta VARCHAR(45) NOT NULL COMMENT 'Esse será a id da conta que vai receber o dinheiro\n',
-  idCliente INT NOT NULL COMMENT 'Esse é o id do Cliente que vai receber a transferência',
   idAgencia INT NOT NULL COMMENT 'Esse será o id da Agencia da conta que está recebendo a transferencia',
   Conta_idConta INT NOT NULL,
-  Conta_idCliente INT NOT NULL,
-  Conta_idAgencia INT NOT NULL,
   PRIMARY KEY (idTransferencia),
-  INDEX fk_Transferencia_Conta1_idx (Conta_idConta ASC, Conta_idCliente ASC, Conta_idAgencia ASC) VISIBLE,
   CONSTRAINT fk_Transferencia_Conta1
-    FOREIGN KEY (Conta_idConta , Conta_idCliente , Conta_idAgencia)
-    REFERENCES Conta (idConta , Cliente_idCliente , Agencia_idAgencia)
+    FOREIGN KEY (Conta_idConta)
+    REFERENCES Conta (idConta)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE INDEX fk_Transferencia_Conta1_idx ON Transferencia (Conta_idConta ASC) VISIBLE;
 
- 
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
