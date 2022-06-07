@@ -12,25 +12,35 @@
     <h:body>
         <h:form style="fixed: top; margin:30px 30px;">
             <p:menubar>
-                <p:submenu label="File" icon="pi pi-fw pi-file">
-                    <p:submenu label="New" icon="pi pi-fw pi-plus">
-                        <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
-                        <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
-                    </p:submenu>
-                    <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
-                    <p:divider />
-                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                <p:submenu label="Conta" icon="pi pi-fw pi-file">
+                <p:menuitem value="Minhas Contas" icon="pi pi-fw pi-file"/>
+                <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
+                    <p:menuitem value="Relatório" icon="pi pi-fw pi-bookmark"/>
                 </p:submenu>
+            </p:submenu>
 
+            <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
+                <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
+                <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
+                <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
+            </p:submenu>
                 <f:facet name="options">
-                    <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                    <p:commandButton  icon="pi pi-fw pi-sign-out" value="Logout" 
+                                      action="#{usuarioController.deslogar()}"
+                                      styleClass="ui-button-info"/>
                 </f:facet>
             </p:menubar>
         </h:form>
         <p:card class="card">
             <f:facet name="title">
-                Nome do User
+              Dados do Usuário:
             </f:facet>
+            <p><b>Usuário:</b> #{usuarioController.usuarioLogado.nome}</p>
+            <p><b>CPF:</b> #{usuarioController.usuarioLogado.cpf}</p>
+            <p><b>E-mail:</b> #{usuarioController.usuarioLogado.email}</p>
+            <p><b>Contato:</b> #{usuarioController.usuarioLogado.contato}</p>
+            <p><b>Quantia de Contas Abertas:</b> #{usuarioController.usuarioLogado.listaConta.size()}</p>
+        
         </p:card>
     </h:body>
 </html>

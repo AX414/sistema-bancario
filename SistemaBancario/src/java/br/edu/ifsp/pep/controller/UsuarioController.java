@@ -4,16 +4,15 @@
  */
 package br.edu.ifsp.pep.controller;
 
+import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Usuario;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -25,7 +24,7 @@ public class UsuarioController implements Serializable {
 
     @Inject
     private UsuarioDAO usuarioDAO;
-    private Usuario usuario;
+    private Usuario usuario = new Usuario();
     private Usuario usuarioLogado;
 
     public UsuarioDAO getUsuarioDAO() {
@@ -52,6 +51,14 @@ public class UsuarioController implements Serializable {
         this.usuarioLogado = usuarioLogado;
     }
 
+    public void redirecionarPagina(String pagina) {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("./"+pagina);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void autenticar() {
         usuarioLogado = usuarioDAO.buscarPorCPFSenha(usuario.getCpf(), usuario.getSenha(), usuario.getNivelAcesso());
 
@@ -62,25 +69,27 @@ public class UsuarioController implements Serializable {
             System.out.println("Autenticado");
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Usuário autenticado.");
 
-            PhaseEvent pe = null;
-            HttpServletRequest request
-                    = (HttpServletRequest) pe.getFacesContext()
-                            .getExternalContext()
-                            .getRequest();
-
-            if (request.getServletPath().equals("./Tela_Principal_Cliente.xhtml")) {
-                if (usuarioLogado.getNivelAcesso().equals("Cliente")) {
-                    try {
-                        pe.getFacesContext().getExternalContext().redirect("./Tela_Login.xhtml");
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
+            if (usuarioLogado.getNivelAcesso().equals("Cliente")) {
+                redirecionarPagina("Tela_Principal_Cliente.xhtml");
+            } else if (usuarioLogado.getNivelAcesso().equals("Funcionario")) {
+                redirecionarPagina("Tela_Principal_Funcionario.xhtml");
+            } else if(usuarioLogado.getNivelAcesso().equals("Administrador")){
+                redirecionarPagina("Tela_Principal_Administrador.xhtml");
             }
         } else {
             System.out.println("Não autenticado");
             addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usário não autenticado.");
             this.usuario = new Usuario();
+        }
+    }
+
+    public void deslogar() {
+        if (usuarioLogado != null) {
+            usuarioLogado = null;
+            redirecionarPagina("Tela_Login.xhtml");
+        } else {
+            //quando dá o bug de sair da sessão e ficar dentro da tela principal ainda
+            redirecionarPagina("Tela_Login.xhtml");
         }
     }
 

@@ -40,7 +40,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
 public class Usuario implements Serializable {
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
@@ -72,6 +71,10 @@ public class Usuario implements Serializable {
     private String rua;
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "numero")
+    private String numero;
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "contato")
     private String contato;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -84,7 +87,7 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario, String nome, String senha, String cpf, String nivelAcesso, String bairro, String rua, String contato, String email, ArrayList<Conta> listaConta) {
+    public Usuario(Integer idUsuario, String nome, String senha, String cpf, String nivelAcesso, String bairro, String rua, String numero, String contato, String email, ArrayList<Conta> listaConta) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.senha = senha;
@@ -92,6 +95,7 @@ public class Usuario implements Serializable {
         this.nivelAcesso = nivelAcesso;
         this.bairro = bairro;
         this.rua = rua;
+        this.numero = numero;
         this.contato = contato;
         this.email = email;
         this.listaConta = listaConta;
@@ -153,6 +157,14 @@ public class Usuario implements Serializable {
         this.rua = rua;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
     public String getContato() {
         return contato;
     }
@@ -162,7 +174,11 @@ public class Usuario implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        if (this.email.isEmpty()) {
+            return "Usuário sem email informado.";
+        } else {
+            return email;
+        }
     }
 
     public void setEmail(String email) {
@@ -202,6 +218,4 @@ public class Usuario implements Serializable {
         return true;
     }
 
-   
-    
 }
