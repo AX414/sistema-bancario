@@ -22,12 +22,12 @@ CREATE TABLE IF NOT EXISTS Usuario (
   PRIMARY KEY (idUsuario))
 ENGINE = InnoDB;
 
-INSERT INTO Usuario VALUES(1,"João Porcel","123","441.441.441-41","Cliente",
+INSERT INTO Usuario VALUES(1,"João Porcel","123","444.444.444-44","Cliente",
 "Bairro A","Rua A","3-35","(18)98134-3434","jp@hotmail.com");
 
 
-INSERT INTO Usuario VALUES(2,"Funcionario","123","551.551.551-51","Funcionario",
-"Bairro B","Rua V","3-35","(18)98135-3132",null);
+INSERT INTO Usuario VALUES(2,"Funcionario","123","555.555.555-55","Funcionario",
+"Bairro B","Rua V","3-35","(18)98135-3132","Não Informado");
 
 
 INSERT INTO Usuario VALUES(3,"Admin","123","666.666.666-66","Administrador",

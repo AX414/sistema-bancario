@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lista Usuários</title>
+        <h:outputStylesheet name="/css/primeflex.min.css" />
+        <h:outputStylesheet name="/css/style.css" />
+    </h:head>
+    <h:body>
+        <h:form style="fixed: top; margin:30px 30px;">
+            <p:growl id="growl" showDetail="true"  />
+            <p:menubar>
+                <p:menuitem value="Home" action="#{usuarioController.retornarHome()}" icon="pi pi-fw pi-home"/>
+                <p:submenu label="Conta" icon="pi pi-fw pi-file">
+                    <p:menuitem value="Minhas Contas" icon="pi pi-fw pi-file"/>
+                    <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
+                        <p:menuitem value="Relatório" icon="pi pi-fw pi-bookmark"/>
+                    </p:submenu>
+                </p:submenu>
+
+                <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
+                    <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
+                    <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
+                    <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
+                </p:submenu>
+                <f:facet name="options">
+                    <p:commandButton  icon="pi pi-fw pi-sign-out" value="Logout" 
+                                      action="#{usuarioController.deslogar()}"
+                                      styleClass="ui-button-info"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+        <h:form id="formulario">
+            <p:growl id="growl" showDetail="true"  />
+            <div class="card">
+
+                <p:dataTable id="usuarios" var="item" 
+                             value="#{usuarioController.usuarios}"
+                             selection="#{usuarioController.uSelecionado}" selectionMode="single" 
+                             rowKey="#{item.nome}"
+                             stripedRows="true"
+                             paginator="true"
+                             reflow="true"
+                             rows="5"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">    
+
+                    <f:facet name="header">
+                        Usuarios cadastrados:
+                    </f:facet>
+
+                    <p:column headerText="Código" filterBy="#{item.idUsuario}" filterMatchMode="contains" sortBy="#{item.idUsuario}">
+                        <h:outputText value="#{item.idUsuario}" />
+                    </p:column>
+
+                    <p:column headerText="Nome" filterBy="#{item.nome}" filterMatchMode="contains" sortBy="#{item.nome}">
+                        <h:outputText value="#{item.nome}" />
+                    </p:column>
+
+                    <p:column headerText="CPF" filterBy="#{item.cpf}" filterMatchMode="contains" sortBy="#{item.cpf}">
+                        <h:outputText value="#{item.cpf}" />
+                    </p:column>
+
+                    <p:column headerText="Contato" filterBy="#{item.contato}" filterMatchMode="contains" sortBy="#{item.contato}">
+                        <h:outputText value="#{item.contato}" />
+                    </p:column>
+
+                    <p:column headerText="E-mail" filterBy="#{item.email}" filterMatchMode="contains" sortBy="#{item.email}">
+                        <h:outputText value="#{item.email}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:contextMenu for="usuarios">
+                    <p:menuitem value="Visualizar" update="usuarioDetalhar" icon="pi pi-search"
+                                oncomplete="PF('usuarioDialog').show()"/>
+                    <p:menuitem value="Excluir" update="usuarios" icon="pi pi-times"
+                                action="#{usuarioController.excluir}"/>
+                </p:contextMenu>
+
+                <p:dialog header="Dados do Usuário" widgetVar="usuarioDialog" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="false">
+                    <p:outputPanel id="usuarioDetalhar" style="text-align:left;">
+                        <p:column rendered="#{not empty usuarioController.uSelecionado}">
+                            <div class="user">
+                                <div class="user-grid-item border-0" style="margin-bottom: 0">
+                                    <div class="user-grid-item-content">
+                                        <div class="user-item"><b>Nome:</b> #{usuarioController.uSelecionado.nome}</div>
+                                        <div class="user-item"><b>CPF:</b> #{usuarioController.uSelecionado.cpf}</div>
+                                        <div class="user-item"><b>Nível de Acesso:</b> #{usuarioController.uSelecionado.niveAcesso}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:outputPanel>
+                </p:dialog>
+
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

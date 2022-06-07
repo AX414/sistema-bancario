@@ -174,11 +174,7 @@ public class Usuario implements Serializable {
     }
 
     public String getEmail() {
-        if (this.email.isEmpty()) {
-            return "Usuário sem email informado.";
-        } else {
             return email;
-        }
     }
 
     public void setEmail(String email) {

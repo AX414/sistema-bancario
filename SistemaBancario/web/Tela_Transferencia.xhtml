@@ -1,12 +1,39 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Efetuar Transferência</title>
+        <h:outputStylesheet name="/css/primeflex.min.css" />
+        <h:outputStylesheet name="/css/style.css" />
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form style="fixed: top; margin:30px 30px;">
+            <p:growl id="growl" showDetail="true"  />
+            <p:menubar>
+                <p:menuitem value="Home" action="#{usuarioController.retornarHome()}" icon="pi pi-fw pi-home"/>
+                <p:submenu label="Conta" icon="pi pi-fw pi-file">
+                    <p:menuitem value="Minhas Contas" icon="pi pi-fw pi-file"/>
+                    <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
+                        <p:menuitem value="Relatório" icon="pi pi-fw pi-bookmark"/>
+                    </p:submenu>
+                </p:submenu>
+
+                <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
+                    <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
+                    <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
+                    <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
+                </p:submenu>
+                <f:facet name="options">
+                    <p:commandButton  icon="pi pi-fw pi-sign-out" value="Logout" 
+                                      action="#{usuarioController.deslogar()}"
+                                      styleClass="ui-button-info"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
     </h:body>
 </html>
+
 

@@ -10,7 +10,30 @@
         <h:outputStylesheet name="/css/style.css" />
     </h:head>
     <h:body>
-        <h:form id="formulario">
+        <h:form style="fixed: top; margin:30px 30px;">
+            <p:growl id="growl" showDetail="true"  />
+            <p:menubar>
+                <p:menuitem value="Home" action="#{usuarioController.retornarHome()}" icon="pi pi-fw pi-home"/>
+                <p:submenu label="Conta" icon="pi pi-fw pi-file">
+                    <p:menuitem value="Minhas Contas" icon="pi pi-fw pi-file"/>
+                    <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
+                        <p:menuitem value="Relatório" icon="pi pi-fw pi-bookmark"/>
+                    </p:submenu>
+                </p:submenu>
+
+                <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
+                    <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
+                    <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
+                    <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
+                </p:submenu>
+                <f:facet name="options">
+                    <p:commandButton  icon="pi pi-fw pi-sign-out" value="Logout" 
+                                      action="#{usuarioController.deslogar()}"
+                                      styleClass="ui-button-info"/>
+                </f:facet>
+            </p:menubar>
+            </h:form>
+            <h:form id="formulario">
             <p:growl id="growl" showDetail="true"  />
             <div class="card">
                 <h3>Cadastro de Usuários</h3>
@@ -25,7 +48,7 @@
 
 
                     <p:outputLabel for="senha1" value="Digite a senha"/>
-                    <p:password id="senha11" value="#{usuarioController.usuario.senha}" match="pwd2" label="Senha 1" required="true"/>
+                    <p:password id="senha1" value="#{usuarioController.usuario.cpf}" match="Senha 2" label="Senha 1" required="true"/>
 
                     <p:outputLabel for="senha2" value="Digite novamente"/>
                     <p:password id="senha2" value="#{usuarioController.usuario.senha}" label="Senha 2" required="true"/>
@@ -55,10 +78,9 @@
                 </p:panelGrid>
 
                 <div class="botao">
-                    <p:commandButton value="Enviar" 
-                                     update="formulario growl"
-                                     />
+                    <p:commandButton value="Enviar" update="formulario growl"/>
                 </div>
+            </div>
         </h:form>
     </h:body>
 </html>

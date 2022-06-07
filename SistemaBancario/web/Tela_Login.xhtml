@@ -11,7 +11,7 @@
     </h:head>
     <h:body>
         <p:growl id="growl" showDetail="true"/>
-        <p:card class="card">
+        <p:card id="cartaoLogin" class="card">
             <h:form id="formulario">
                 <h1>
                     LOGIN:
@@ -44,7 +44,7 @@
 
 
                 <p:commandButton icon="pi pi-check" value="Entrar" action="#{usuarioController.autenticar()}" update="formulario growl"/>
-                <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-danger" update="formulario" style="margin-left: .5em"/>
+                <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-danger" resetValues="true" update="formulario" style="margin-left: .5em"/>
 
             </h:form>
         </p:card>

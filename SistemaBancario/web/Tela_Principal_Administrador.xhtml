@@ -21,12 +21,7 @@
 
                 <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
                     <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
-
-                    <p:submenu label="Depósitos">
-                        <p:menuitem value="Efetuar um Depósito" icon="pi pi-fw pi-align-right"/>
-                        <p:menuitem value="Aprovar Depósito" icon="pi pi-fw pi-align-right"/>
-                    </p:submenu>
-
+                    <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
                     <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
                 </p:submenu>
                 <f:facet name="options">
@@ -37,12 +32,23 @@
             </p:menubar>
         </h:form>
         <p:card class="card">
+            <h:form>
+                <p:menubar> 
+                    <p:submenu label="Usuários">
+                        <p:menuitem value="Cadastrar Usuários" url="Tela_Cadastro_Usuario.xhtml" icon="pi pi-fw pi-align-right"/>
+                        <p:menuitem value="Gerenciar Usuários" url="Tela_Lista_Usuarios.xhtml" icon="pi pi-fw pi-align-right"/>
+                    </p:submenu>
+                    <p:menuitem value="Abrir Conta para um Cliente" icon="pi pi-fw pi-align-right"/>
+                    <p:menuitem value="Aprovar Depósito" icon="pi pi-fw pi-align-right"/>
+                </p:menubar>
+            </h:form>
             <f:facet name="title">
                 Bem-vindo, #{usuarioController.usuarioLogado.nome}!
             </f:facet>
             <hr></hr>
             <h3><b>Dados do usuário:</b></h3>
             <p><b>Usuário:</b> #{usuarioController.usuarioLogado.nome}</p>
+            <p><b>Nível de Acesso:</b> #{usuarioController.usuarioLogado.nivelAcesso}</p>
             <p><b>CPF:</b> #{usuarioController.usuarioLogado.cpf}</p>
             <p><b>E-mail:</b> #{usuarioController.usuarioLogado.email}</p>
             <p><b>Contato:</b> #{usuarioController.usuarioLogado.contato}</p>

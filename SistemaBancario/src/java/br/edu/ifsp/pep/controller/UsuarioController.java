@@ -8,6 +8,7 @@ import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Usuario;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,6 +27,8 @@ public class UsuarioController implements Serializable {
     private UsuarioDAO usuarioDAO;
     private Usuario usuario = new Usuario();
     private Usuario usuarioLogado;
+    private Usuario uSelecionado;
+    private List<Usuario> usuarios;
 
     public UsuarioDAO getUsuarioDAO() {
         return usuarioDAO;
@@ -51,11 +54,41 @@ public class UsuarioController implements Serializable {
         this.usuarioLogado = usuarioLogado;
     }
 
+    public Usuario getuSelecionado() {
+        return uSelecionado;
+    }
+
+    public void setuSelecionado(Usuario uSelecionado) {
+        this.uSelecionado = uSelecionado;
+    }
+
+    public List<Usuario> getUsuarios() {
+        if (this.usuarios == null) {
+            System.out.println("Carregando...");
+            this.usuarios = usuarioDAO.buscarTodos();
+        }
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
     public void redirecionarPagina(String pagina) {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("./"+pagina);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("./" + pagina);
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void retornarHome() {
+        if (usuarioLogado.getNivelAcesso().equals("Cliente")) {
+            redirecionarPagina("Tela_Principal_Cliente.xhtml");
+        } else if (usuarioLogado.getNivelAcesso().equals("Funcionario")) {
+            redirecionarPagina("Tela_Principal_Funcionario.xhtml");
+        } else if (usuarioLogado.getNivelAcesso().equals("Administrador")) {
+            redirecionarPagina("Tela_Principal_Administrador.xhtml");
         }
     }
 
@@ -68,17 +101,10 @@ public class UsuarioController implements Serializable {
         if (usuarioLogado != null) {
             System.out.println("Autenticado");
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Usuário autenticado.");
-
-            if (usuarioLogado.getNivelAcesso().equals("Cliente")) {
-                redirecionarPagina("Tela_Principal_Cliente.xhtml");
-            } else if (usuarioLogado.getNivelAcesso().equals("Funcionario")) {
-                redirecionarPagina("Tela_Principal_Funcionario.xhtml");
-            } else if(usuarioLogado.getNivelAcesso().equals("Administrador")){
-                redirecionarPagina("Tela_Principal_Administrador.xhtml");
-            }
+            retornarHome();
         } else {
             System.out.println("Não autenticado");
-            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usário não autenticado.");
+            addMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário não autenticado.");
             this.usuario = new Usuario();
         }
     }
@@ -90,6 +116,23 @@ public class UsuarioController implements Serializable {
         } else {
             //quando dá o bug de sair da sessão e ficar dentro da tela principal ainda
             redirecionarPagina("Tela_Login.xhtml");
+        }
+    }
+
+    public void adicionar() {
+        System.out.println("adicionou um usuario na lista.");
+        usuarioDAO.insert(usuario);
+        this.usuarios = null;
+        addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
+    }
+
+    public void excluir() {
+        if (uSelecionado != null) {
+            usuarioDAO.delete(uSelecionado);
+            this.usuarios = null;
+            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Exclusão realizada");
+        } else {
+            addMessage(FacesMessage.SEVERITY_WARN, "Info Message", "Selecione um usuario para excluir");
         }
     }
 

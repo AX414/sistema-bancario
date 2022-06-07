@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package br.edu.ifsp.pep.dao;
+
 import br.edu.ifsp.pep.model.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -16,9 +18,25 @@ import javax.persistence.TypedQuery;
  * @author joaov
  */
 @Stateless
-public class UsuarioDAO extends AbstratoDAO<Usuario>{
+public class UsuarioDAO extends AbstratoDAO<Usuario> {
+
     @PersistenceContext(unitName = "SistemaBancarioPU")
     private EntityManager em;
+
+    public void insert(Usuario u) {
+        em.persist(u);
+    }
+
+    public void delete(Usuario u) {
+        if (!em.contains(u)) {
+            u = em.merge(u);
+        }
+        em.remove(u);
+    }
+
+    public List<Usuario> buscarTodos() {
+        return em.createQuery("Select u FROM Usuario u",Usuario.class).getResultList();
+    }
 
     public Usuario buscarPorCPFSenha(String cpf, String senha, String nivelAcesso) {
         TypedQuery<Usuario> query
@@ -27,12 +45,12 @@ public class UsuarioDAO extends AbstratoDAO<Usuario>{
         query.setParameter("cpf", cpf);
         query.setParameter("senha", senha);
         query.setParameter("nivelAcesso", nivelAcesso);
-        
-        try{
+
+        try {
             return query.getSingleResult();
-        } catch(NoResultException ex){
+        } catch (NoResultException ex) {
             return null;
         }
-        
+
     }
 }
