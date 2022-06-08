@@ -4,7 +4,7 @@
 
 body{
     background-color: #7395AE;
-    color: #05386B;
+    color: #4965057;
 }
 
 body .ui-datatable.ui-datatable-striped
@@ -43,3 +43,4 @@ body .ui-datatable.ui-datatable-striped
 #contatos {
     margin-bottom:1rem;
 }
+

@@ -62,6 +62,10 @@ public class Usuario implements Serializable {
     @Column(name = "nivelAcesso")
     private String nivelAcesso;
     @NotNull
+    @Size(min = 2, max = 2)
+    @Column(name = "estado")
+    private String estado;
+    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "bairro")
     private String bairro;
@@ -87,12 +91,13 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario, String nome, String senha, String cpf, String nivelAcesso, String bairro, String rua, String numero, String contato, String email, ArrayList<Conta> listaConta) {
+    public Usuario(Integer idUsuario, String nome, String senha, String cpf, String nivelAcesso, String estado, String bairro, String rua, String numero, String contato, String email, ArrayList<Conta> listaConta) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.senha = senha;
         this.cpf = cpf;
         this.nivelAcesso = nivelAcesso;
+        this.estado = estado;
         this.bairro = bairro;
         this.rua = rua;
         this.numero = numero;
@@ -139,6 +144,14 @@ public class Usuario implements Serializable {
 
     public void setNivelAcesso(String nivelAcesso) {
         this.nivelAcesso = nivelAcesso;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getBairro() {

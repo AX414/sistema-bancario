@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
   senha VARCHAR(45) NOT NULL,
   cpf VARCHAR(45) NOT NULL,
   nivelAcesso VARCHAR(45) NOT NULL,
+  estado VARCHAR(2) NOT NULL,
   bairro VARCHAR(45) NOT NULL,
   rua VARCHAR(45) NOT NULL,
   numero VARCHAR(45) NOT NULL,
@@ -22,15 +23,15 @@ CREATE TABLE IF NOT EXISTS Usuario (
   PRIMARY KEY (idUsuario))
 ENGINE = InnoDB;
 
-INSERT INTO Usuario VALUES(1,"João Porcel","123","444.444.444-44","Cliente",
+INSERT INTO Usuario VALUES(1,"João Porcel","123","444.444.444-44","Cliente","SP",
 "Bairro A","Rua A","3-35","(18)98134-3434","jp@hotmail.com");
 
 
-INSERT INTO Usuario VALUES(2,"Funcionario","123","555.555.555-55","Funcionario",
+INSERT INTO Usuario VALUES(2,"Funcionario","123","555.555.555-55","Funcionario","SP",
 "Bairro B","Rua V","3-35","(18)98135-3132","Não Informado");
 
 
-INSERT INTO Usuario VALUES(3,"Admin","123","666.666.666-66","Administrador",
+INSERT INTO Usuario VALUES(3,"Admin","123","666.666.666-66","Administrador","SP",
 "Bairro A","Rua B","13-20","(18)98134-3434","admin@hotmail.com");
 
 SELECT * FROM Usuario;

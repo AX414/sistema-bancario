@@ -11,74 +11,137 @@
     </h:head>
     <h:body>
         <h:form style="fixed: top; margin:30px 30px;">
-            <p:growl id="growl" showDetail="true"  />
             <p:menubar>
                 <p:menuitem value="Home" action="#{usuarioController.retornarHome()}" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Conta" icon="pi pi-fw pi-file">
-                    <p:menuitem value="Minhas Contas" icon="pi pi-fw pi-file"/>
+                <p:submenu label="Conta" icon="pi pi-fw pi-user">
+                    <p:menuitem value="Minhas Contas"  icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
-                        <p:menuitem value="Relatório" icon="pi pi-fw pi-bookmark"/>
+                        <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
                 </p:submenu>
-
                 <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
-                    <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
-                    <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
-                    <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
+                    <p:menuitem value="Transferências" url="Tela_Transferencia.xhtml" icon="pi pi-fw pi-globe"/>
+                    <p:menuitem value="Depósitos" url="Tela_Deposito.xhtml" icon="pi pi-fw pi-envelope"/>
+                    <p:menuitem value="Saques" url="Tela_Saque.xhtml" icon="pi pi-fw pi-dollar"/>
                 </p:submenu>
                 <f:facet name="options">
-                    <p:commandButton  icon="pi pi-fw pi-sign-out" value="Logout" 
+                    <p:avatar label="#{usuarioController.labelAvatar()}" styleClass="p-mr-2" 
+                              style="background-color:#2196F3; color:#fff; width:45px; height: 45px;" 
+                              shape="circle"  />
+                    <p:commandButton  icon="pi pi-fw pi-sign-out" 
                                       action="#{usuarioController.deslogar()}"
-                                      styleClass="ui-button-info"/>
+                                      styleClass="rounded-button ui-button-danger" style="width:45px; height: 45px;"/>
                 </f:facet>
             </p:menubar>
-            </h:form>
-            <h:form id="formulario">
-            <p:growl id="growl" showDetail="true"  />
+        </h:form>
+        <h:form id="formulario">
+            <p:growl id="growl" showDetail="true"/>
             <div class="card">
-                <h3>Cadastro de Usuários</h3>
-                <p:panelGrid columns="2"
-                             columnClasses="ui-grid-col-2,ui-grid-col-3"
-                             layout="grid"
-                             styleClass="ui-panelgrid-blank ui-fluid"
-                             style="border:0px none; background-color:transparent;">
-
-                    <p:outputLabel for="nome" value="Nome" />
-                    <p:inputText id="nome" value="#{usuarioController.usuario.nome}"/>
-
-
-                    <p:outputLabel for="senha1" value="Digite a senha"/>
-                    <p:password id="senha1" value="#{usuarioController.usuario.cpf}" match="Senha 2" label="Senha 1" required="true"/>
-
-                    <p:outputLabel for="senha2" value="Digite novamente"/>
-                    <p:password id="senha2" value="#{usuarioController.usuario.senha}" label="Senha 2" required="true"/>
-
-                    <p:outputLabel for="cpf" value="CPF" />
-                    <p:inputMask id="cpf" value="#{usuarioController.usuario.cpf}" mask="999.999.999-99" type="text" />
-
-                    <label for="nivelAcesso">Nível de Acesso</label>
-                    <p:selectOneMenu id="option" value="#{usuarioController.usuario.nivelAcesso}">
-                        <f:selectItem itemLabel="Cliente" itemValue="Cliente"/>
-                        <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
-                        <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="bairro" value="Bairro" />
-                    <p:inputText id="bairro" value="#{usuarioController.usuario.bairro}" type="text" />
-
-                    <p:outputLabel for="rua" value="Rua" />
-                    <p:inputText id="rua" value="#{usuarioController.usuario.rua}" type="text" />
-
-                    <p:outputLabel for="contato" value="Contato" />
-                    <p:inputText id="contato" value="#{usuarioController.usuario.contato}" type="text" />
-
-                    <p:outputLabel for="email" value="Email" />
-                    <p:inputText id="email" value="#{usuarioController.usuario.email}" type="text" />
-
-                </p:panelGrid>
-
-                <div class="botao">
-                    <p:commandButton value="Enviar" update="formulario growl"/>
+                <center>
+                    <h1>Cadastro de Usuários</h1>
+                </center> 
+                <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
+                    <div class="p-field p-grid">
+                        <label for="firstname" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nome</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="nome" value="#{usuarioController.usuario.nome}"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="lastname" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">CPF</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputMask id="cpf" value="#{usuarioController.usuario.cpf}" mask="999.999.999-99" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="senha1" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite a Senha</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:password id="senha1" value="#{usuarioController.usuario.senha}" match="senha2" label="Senha 1" required="true"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="senha2" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite novamente</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:password id="senha2" value="#{usuarioController.usuario.senha}" label="Senha 2" required="true"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="nivelAcesso" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nível de Acesso</label>
+                        <div class="p-col-12 p-md-10">
+                        <p:selectOneMenu id="option" value="#{usuarioController.usuario.nivelAcesso}">
+                            <f:selectItem itemLabel="Cliente" itemValue="Cliente"/>
+                            <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
+                            <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
+                        </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="estado" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Estado</label>
+                        <div class="p-col-12 p-md-10">
+                        <p:selectOneMenu id="estado" value="#{usuarioController.usuario.estado}">
+                            <f:selectItem itemLabel="AC" itemValue="AC"/>
+                            <f:selectItem itemLabel="AL" itemValue="AL"/>
+                            <f:selectItem itemLabel="AP" itemValue="AP"/>
+                            <f:selectItem itemLabel="AM" itemValue="AM"/>
+                            <f:selectItem itemLabel="BA" itemValue="BA"/>
+                            <f:selectItem itemLabel="CE" itemValue="CE"/>
+                            <f:selectItem itemLabel="DF" itemValue="DF"/>
+                            <f:selectItem itemLabel="ES" itemValue="ES"/>
+                            <f:selectItem itemLabel="GO" itemValue="GO"/>
+                            <f:selectItem itemLabel="MA" itemValue="MA"/>
+                            <f:selectItem itemLabel="MT" itemValue="MT"/>
+                            <f:selectItem itemLabel="MS" itemValue="MS"/>
+                            <f:selectItem itemLabel="MG" itemValue="MG"/>
+                            <f:selectItem itemLabel="PA" itemValue="PA"/>
+                            <f:selectItem itemLabel="PB" itemValue="PB"/>
+                            <f:selectItem itemLabel="PR" itemValue="PR"/>
+                            <f:selectItem itemLabel="PE" itemValue="PE"/>
+                            <f:selectItem itemLabel="PI" itemValue="PI"/>
+                            <f:selectItem itemLabel="RJ" itemValue="RJ"/>
+                            <f:selectItem itemLabel="RN" itemValue="RN"/>
+                            <f:selectItem itemLabel="RS" itemValue="RS"/>
+                            <f:selectItem itemLabel="RO" itemValue="RO"/>
+                            <f:selectItem itemLabel="RR" itemValue="RR"/>
+                            <f:selectItem itemLabel="SC" itemValue="SC"/>
+                            <f:selectItem itemLabel="SP" itemValue="SP"/>
+                            <f:selectItem itemLabel="SE" itemValue="SE"/>
+                            <f:selectItem itemLabel="TO" itemValue="TO"/>
+                        </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="bairro" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Bairro</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="bairro" value="#{usuarioController.usuario.bairro}" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="rua" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Rua</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="rua" value="#{usuarioController.usuario.rua}" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="numero" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numero</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="numero" value="#{usuarioController.usuario.numero}" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="contato" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Contato</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="contato" value="#{usuarioController.usuario.contato}" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="email" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">E-mail</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="email" value="#{usuarioController.usuario.email}" type="text" />
+                        </div>
+                    </div>
+                    <div class="botao">
+                        <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary" value="Cadastrar" action="#{usuarioController.adicionar()}" update="formulario growl"/>
+                    </div>
                 </div>
             </div>
         </h:form>

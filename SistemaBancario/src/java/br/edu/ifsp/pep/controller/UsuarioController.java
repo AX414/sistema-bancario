@@ -120,10 +120,51 @@ public class UsuarioController implements Serializable {
     }
 
     public void adicionar() {
-        System.out.println("adicionou um usuario na lista.");
-        usuarioDAO.insert(usuario);
-        this.usuarios = null;
-        addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
+
+        /*
+            3 situações: 
+            
+            1 - ADM e Funcionario podem cadastrar clientes.
+            2 - ADM cadastra ADMs, Funcionários e Clientes.
+            3 - Se um Funcionário tentar cadastrar um ADM 
+            ou Funcionário, vai dar uma mensagem de erro.
+        */
+
+        if (usuarioLogado.getNivelAcesso().equals("Administrador")
+                || usuarioLogado.getNivelAcesso().equals("Funcionario")) {
+
+            if (usuario.getNivelAcesso().equals("Cliente")) {
+                if (usuario.getEmail().isEmpty()) {
+                    usuario.setEmail("Não informado");
+                }
+                usuarioDAO.insert(usuario);
+                this.usuarios = null;
+                System.out.println("adicionou um usuario na lista.");
+                addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
+            }
+        } 
+
+        if(usuarioLogado.getNivelAcesso().equals("Administrador")){
+            if (usuario.getNivelAcesso().equals("Administrador")||
+                usuario.getNivelAcesso().equals("Funcionario")||
+                usuario.getNivelAcesso().equals("Cliente")) {
+                if (usuario.getEmail().isEmpty()) {
+                    usuario.setEmail("Não informado");
+                }
+                usuarioDAO.insert(usuario);
+                this.usuarios = null;
+                System.out.println("adicionou um usuario na lista.");
+                addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
+            }
+        }
+
+        if(usuarioLogado.getNivelAcesso().equals("Funcionario")){
+             if (usuario.getNivelAcesso().equals("Funcionario") 
+            || usuario.getNivelAcesso().equals("Administrador")) {
+                addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Apenas um Administrador pode Cadastrar um "
+                + "usuário de nível de acesso de Funcionário ou Administrador.");
+            }
+        }
     }
 
     public void excluir() {
@@ -134,6 +175,21 @@ public class UsuarioController implements Serializable {
         } else {
             addMessage(FacesMessage.SEVERITY_WARN, "Info Message", "Selecione um usuario para excluir");
         }
+    }
+
+    public char labelAvatar(){
+        String nome = this.usuarioLogado.getNome();
+        char inicial;
+
+        if(usuarioLogado != null){
+            inicial = nome.charAt(0);
+        }else{
+            inicial = '?';
+        }
+        
+
+        return inicial;
+        
     }
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {

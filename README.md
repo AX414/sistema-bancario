@@ -9,12 +9,11 @@ Lista de Coisas pra terminar e anotações:
 
 <h1>Modelos:</h1>
 <ul>
-	<li>Cliente</li>
+	<li>Usuario</li>
 	<li>Agência</li>
 	<li>Transferência</li>
 	<li>Depósito</li>
 	<li>Saque</li>
-	<li>Funcionário</li>
 	<li>Conta</li>
 </ul>
 
@@ -28,17 +27,13 @@ Lista de Coisas pra terminar e anotações:
 <h1>Páginas:</h1>
 <ul>
 	<li>Tela de Login</li>
-	<li>Tela Principal</li>
+	<li>Tela Principal do Administrador</li>
+	<li>Tela Principal do Funcionario</li>
+	<li>Tela Principal do Cliente</li>
 	<li>Tela de Saque</li>
 	<li>Tela de Depósito</li>
 	<li>Tela de Transferência</li>
-</ul>
-
-<hr>
-<h1>Dúvidas:</h1>
-<ul>
-	<li>CRUD de Clientes (Se tiver, vai ter que vincular o Funcionário ao Cliente)</li>
-	<li>CRUD de Funcionário</li>
-	<li>Se vou precisar de uma classe abstrata de usuário</li>
-	<li>Se vou deixar taxa nas contas</li>
+	<li>Tela de Extrato</li>
+	<li>Tela de Listagem de Cliente</li>
+	<li>Tela de Cadastro de Cliente</li>
 </ul>

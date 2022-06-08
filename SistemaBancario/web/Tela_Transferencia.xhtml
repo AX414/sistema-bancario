@@ -10,26 +10,28 @@
         <h:outputStylesheet name="/css/style.css" />
     </h:head>
     <h:body>
-        <h:form style="fixed: top; margin:30px 30px;">
-            <p:growl id="growl" showDetail="true"  />
+      <h:form style="fixed: top; margin:30px 30px;">
             <p:menubar>
                 <p:menuitem value="Home" action="#{usuarioController.retornarHome()}" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Conta" icon="pi pi-fw pi-file">
-                    <p:menuitem value="Minhas Contas" icon="pi pi-fw pi-file"/>
+                <p:submenu label="Conta" icon="pi pi-fw pi-user">
+                    <p:menuitem value="Minhas Contas"  icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
-                        <p:menuitem value="Relatório" icon="pi pi-fw pi-bookmark"/>
+                        <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
                 </p:submenu>
 
                 <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
-                    <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
-                    <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
-                    <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
+                    <p:menuitem value="Transferências" url="Tela_Transferencia.xhtml" icon="pi pi-fw pi-globe"/>
+                    <p:menuitem value="Depósitos" url="Tela_Deposito.xhtml" icon="pi pi-fw pi-envelope"/>
+                    <p:menuitem value="Saques" url="Tela_Saque.xhtml" icon="pi pi-fw pi-dollar"/>
                 </p:submenu>
                 <f:facet name="options">
-                    <p:commandButton  icon="pi pi-fw pi-sign-out" value="Logout" 
+                    <p:avatar label="#{usuarioController.labelAvatar()}" styleClass="p-mr-2" 
+                    style="background-color:#2196F3; color:#fff; width:45px; height: 45px;" 
+                    shape="circle"  />
+                    <p:commandButton  icon="pi pi-fw pi-sign-out" 
                                       action="#{usuarioController.deslogar()}"
-                                      styleClass="ui-button-info"/>
+                                      styleClass="rounded-button ui-button-danger" style="width:45px; height: 45px;"/>
                 </f:facet>
             </p:menubar>
         </h:form>

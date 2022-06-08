@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Tela Principal</title>
         <h:outputStylesheet name="/css/primeflex.min.css" />
@@ -12,34 +13,37 @@
     <h:body>
         <h:form style="fixed: top; margin:30px 30px;">
             <p:menubar>
-                <p:submenu label="Conta" icon="pi pi-fw pi-file">
-                    <p:menuitem value="Minhas Contas" icon="pi pi-fw pi-file"/>
+                    <p:submenu label="Conta" icon="pi pi-fw pi-user">
+                    <p:menuitem value="Minhas Contas"  icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
-                        <p:menuitem value="Relatório" icon="pi pi-fw pi-bookmark"/>
+                        <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
                 </p:submenu>
 
                 <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
-                    <p:menuitem value="Efetuar Transações" icon="pi pi-fw pi-align-left"/>
-                    <p:menuitem value="Efetuar Depósitos" icon="pi pi-fw pi-align-right"/>
-                    <p:menuitem value="Efetuar Saques" icon="pi pi-fw pi-align-center"/>
+                    <p:menuitem value="Transferências" url="Tela_Transferencia.xhtml" icon="pi pi-fw pi-globe"/>
+                    <p:menuitem value="Depósitos" url="Tela_Deposito.xhtml" icon="pi pi-fw pi-envelope"/>
+                    <p:menuitem value="Saques" url="Tela_Saque.xhtml" icon="pi pi-fw pi-dollar"/>
                 </p:submenu>
                 <f:facet name="options">
-                    <p:commandButton  icon="pi pi-fw pi-sign-out" value="Logout" 
+                    <p:avatar label="#{usuarioController.labelAvatar()}" styleClass="p-mr-2" 
+                    style="background-color:#2196F3; color:#fff; width:45px; height: 45px;" 
+                    shape="circle"  />
+                    <p:commandButton  icon="pi pi-fw pi-sign-out" 
                                       action="#{usuarioController.deslogar()}"
-                                      styleClass="ui-button-info"/>
+                                      styleClass="rounded-button ui-button-danger" style="width:45px; height: 45px;"/>
                 </f:facet>
             </p:menubar>
         </h:form>
         <p:card class="card">
             <h:form>
                 <p:menubar> 
-                    <p:submenu label="Usuários">
-                        <p:menuitem value="Cadastrar Usuários" url="Tela_Cadastro_Usuario.xhtml" icon="pi pi-fw pi-align-right"/>
-                        <p:menuitem value="Gerenciar Usuários" url="Tela_Lista_Usuarios.xhtml" icon="pi pi-fw pi-align-right"/>
+                    <p:submenu label="Usuários" icon="pi pi-fw pi-users">
+                        <p:menuitem value="Cadastrar Usuários" url="Tela_Cadastro_Usuario.xhtml" icon="pi pi-fw pi-user-plus"/>
+                        <p:menuitem value="Gerenciar Usuários" url="Tela_Lista_Usuarios.xhtml" icon="pi pi-fw pi-user-edit"/>
                     </p:submenu>
-                    <p:menuitem value="Abrir Conta para um Cliente" icon="pi pi-fw pi-align-right"/>
-                    <p:menuitem value="Aprovar Depósito" icon="pi pi-fw pi-align-right"/>
+                    <p:menuitem value="Abrir Conta para um Cliente" icon="pi pi-fw pi-credit-card"/>
+                    <p:menuitem value="Aprovar Depósito" icon="pi pi-fw pi-money-bill"/>
                 </p:menubar>
             </h:form>
             <f:facet name="title">
@@ -53,7 +57,6 @@
             <p><b>E-mail:</b> #{usuarioController.usuarioLogado.email}</p>
             <p><b>Contato:</b> #{usuarioController.usuarioLogado.contato}</p>
             <p><b>Quantia de Contas Abertas:</b> #{usuarioController.usuarioLogado.listaConta.size()}</p>
-
         </p:card>
     </h:body>
 </html>
