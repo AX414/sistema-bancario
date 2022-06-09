@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
   cpf VARCHAR(45) NOT NULL,
   nivelAcesso VARCHAR(45) NOT NULL,
   estado VARCHAR(2) NOT NULL,
+  cidade VARCHAR(45) NOT NULL,
   bairro VARCHAR(45) NOT NULL,
   rua VARCHAR(45) NOT NULL,
   numero VARCHAR(45) NOT NULL,
@@ -23,15 +24,15 @@ CREATE TABLE IF NOT EXISTS Usuario (
   PRIMARY KEY (idUsuario))
 ENGINE = InnoDB;
 
-INSERT INTO Usuario VALUES(1,"João Porcel","123","444.444.444-44","Cliente","SP",
+INSERT INTO Usuario VALUES(1,"João Porcel","123","444.444.444-44","Cliente","SP","Presidente Epitácio",
 "Bairro A","Rua A","3-35","(18)98134-3434","jp@hotmail.com");
 
 
-INSERT INTO Usuario VALUES(2,"Funcionario","123","555.555.555-55","Funcionario","SP",
+INSERT INTO Usuario VALUES(2,"Funcionario","123","555.555.555-55","Funcionario","SP","Presidente Epitácio",
 "Bairro B","Rua V","3-35","(18)98135-3132","Não Informado");
 
 
-INSERT INTO Usuario VALUES(3,"Admin","123","666.666.666-66","Administrador","SP",
+INSERT INTO Usuario VALUES(3,"Admin","123","666.666.666-66","Administrador","SP","Presidente Epitácio",
 "Bairro A","Rua B","13-20","(18)98134-3434","admin@hotmail.com");
 
 SELECT * FROM Usuario;
@@ -50,6 +51,7 @@ DROP TABLE IF EXISTS Conta ;
 CREATE TABLE IF NOT EXISTS Conta (
   idConta INT NOT NULL,
   senha VARCHAR(45) NOT NULL,
+  status VARCHAR(45) NOT NULL,
   tipo VARCHAR(45) NOT NULL,
   limite DOUBLE NOT NULL,
   saldo DOUBLE NOT NULL,

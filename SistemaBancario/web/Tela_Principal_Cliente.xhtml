@@ -12,8 +12,9 @@
     <h:body>
         <h:form style="fixed: top; margin:30px 30px;">
             <p:menubar>
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{usuarioController.retornarHome()}"/>
                 <p:submenu label="Conta" icon="pi pi-fw pi-user">
-                    <p:menuitem value="Minhas Contas"  icon="pi pi-fw pi-id-card"/>
+                    <p:menuitem value="Minhas Contas"  url="Tela_Lista_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
                         <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
@@ -24,10 +25,10 @@
                     <p:menuitem value="Depósitos" url="Tela_Deposito.xhtml" icon="pi pi-fw pi-envelope"/>
                     <p:menuitem value="Saques" url="Tela_Saque.xhtml" icon="pi pi-fw pi-dollar"/>
                 </p:submenu>
-               <f:facet name="options">
+                <f:facet name="options">
                     <p:avatar label="#{usuarioController.labelAvatar()}" styleClass="p-mr-2" 
-                    style="background-color:#2196F3; color:#fff; width:45px; height: 45px;" 
-                    shape="circle"  />
+                              style="background-color:#2196F3; color:#fff; width:45px; height: 45px;" 
+                              shape="circle"  />
                     <p:commandButton  icon="pi pi-fw pi-sign-out" 
                                       action="#{usuarioController.deslogar()}"
                                       styleClass="rounded-button ui-button-danger" style="width:45px; height: 45px;"/>

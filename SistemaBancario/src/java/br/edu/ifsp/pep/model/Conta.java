@@ -52,6 +52,10 @@ public class Conta implements Serializable {
     @Column(name = "tipo")
     private String tipo;
     @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "status")
+    private String status;
+    @NotNull
     @Column(name = "limite")
     private double limite;
     @NotNull
@@ -77,10 +81,11 @@ public class Conta implements Serializable {
         this.idConta = idConta;
     }
 
-    public Conta(Integer idConta, String senha, String tipo, double limite, double saldo) {
+    public Conta(Integer idConta, String senha, String tipo, String status, double limite, double saldo) {
         this.idConta = idConta;
         this.senha = senha;
         this.tipo = tipo;
+        this.status = status;
         this.limite = limite;
         this.saldo = saldo;
     }
@@ -109,6 +114,14 @@ public class Conta implements Serializable {
         this.tipo = tipo;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public double getLimite() {
         return limite;
     }

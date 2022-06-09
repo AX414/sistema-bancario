@@ -67,6 +67,10 @@ public class Usuario implements Serializable {
     private String estado;
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "cidade")
+    private String cidade;
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "bairro")
     private String bairro;
     @NotNull
@@ -91,13 +95,14 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario, String nome, String senha, String cpf, String nivelAcesso, String estado, String bairro, String rua, String numero, String contato, String email, ArrayList<Conta> listaConta) {
+    public Usuario(Integer idUsuario, String nome, String senha, String cpf, String nivelAcesso, String estado, String cidade, String bairro, String rua, String numero, String contato, String email, ArrayList<Conta> listaConta) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.senha = senha;
         this.cpf = cpf;
         this.nivelAcesso = nivelAcesso;
         this.estado = estado;
+        this.cidade = cidade;
         this.bairro = bairro;
         this.rua = rua;
         this.numero = numero;
@@ -154,6 +159,14 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
     public String getBairro() {
         return bairro;
     }
@@ -187,7 +200,7 @@ public class Usuario implements Serializable {
     }
 
     public String getEmail() {
-            return email;
+        return email;
     }
 
     public void setEmail(String email) {

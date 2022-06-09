@@ -15,13 +15,13 @@ import javax.persistence.PersistenceContext;
 public abstract class AbstratoDAO<T> {
 
     @PersistenceContext(unitName = "SistemaBancarioPU")
-    private EntityManager em;
+    public EntityManager em;
     
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    public void create(T entity) {
+
+    public void insert(T entity) {
         em.persist(entity);
     }
     

@@ -95,10 +95,10 @@ public class UsuarioController implements Serializable {
     public void autenticar() {
         usuarioLogado = usuarioDAO.buscarPorCPFSenha(usuario.getCpf(), usuario.getSenha(), usuario.getNivelAcesso());
 
-        System.out.println("\nCPF: " + usuario.getCpf()
+        System.out.println("\nCPF: " + this.usuario.getCpf()
                 + "\nSenha: " + usuario.getSenha()
                 + "\nNivel de acesso: " + usuario.getNivelAcesso());
-        if (usuarioLogado != null) {
+        if (this.usuarioLogado != null) {
             System.out.println("Autenticado");
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Usuário autenticado.");
             retornarHome();
@@ -110,8 +110,8 @@ public class UsuarioController implements Serializable {
     }
 
     public void deslogar() {
-        if (usuarioLogado != null) {
-            usuarioLogado = null;
+        if (this.usuarioLogado != null) {
+            this.usuarioLogado = null;
             redirecionarPagina("Tela_Login.xhtml");
         } else {
             //quando dá o bug de sair da sessão e ficar dentro da tela principal ainda
@@ -129,13 +129,12 @@ public class UsuarioController implements Serializable {
             3 - Se um Funcionário tentar cadastrar um ADM 
             ou Funcionário, vai dar uma mensagem de erro.
         */
-
-        if (usuarioLogado.getNivelAcesso().equals("Administrador")
-                || usuarioLogado.getNivelAcesso().equals("Funcionario")) {
-
-            if (usuario.getNivelAcesso().equals("Cliente")) {
-                if (usuario.getEmail().isEmpty()) {
-                    usuario.setEmail("Não informado");
+       this.usuario = new Usuario();
+        if (usuarioLogado.getNivelAcesso().equals("Funcionario")) {
+                
+            if (this.usuario.getNivelAcesso().equals("Cliente")) {
+                if (this.usuario.getEmail().isEmpty()) {
+                    this.usuario.setEmail("Não informado");
                 }
                 usuarioDAO.insert(usuario);
                 this.usuarios = null;
@@ -144,12 +143,12 @@ public class UsuarioController implements Serializable {
             }
         } 
 
-        if(usuarioLogado.getNivelAcesso().equals("Administrador")){
-            if (usuario.getNivelAcesso().equals("Administrador")||
-                usuario.getNivelAcesso().equals("Funcionario")||
-                usuario.getNivelAcesso().equals("Cliente")) {
-                if (usuario.getEmail().isEmpty()) {
-                    usuario.setEmail("Não informado");
+        if(this.usuarioLogado.getNivelAcesso().equals("Administrador")){
+            if (this.usuario.getNivelAcesso().equals("Administrador")||
+                this.usuario.getNivelAcesso().equals("Funcionario")||
+                this.usuario.getNivelAcesso().equals("Cliente")) {
+                if (this.usuario.getEmail().isEmpty()) {
+                    this.usuario.setEmail("Não informado");
                 }
                 usuarioDAO.insert(usuario);
                 this.usuarios = null;

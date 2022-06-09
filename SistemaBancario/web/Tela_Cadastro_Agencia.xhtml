@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Lista Usuários</title>
+        <title>Cadastro de Conta</title>
         <h:outputStylesheet name="/css/primeflex.min.css" />
         <h:outputStylesheet name="/css/style.css" />
     </h:head>
@@ -19,6 +19,7 @@
                         <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
                 </p:submenu>
+
                 <p:submenu label="Movimentações" icon="pi pi-fw pi-pencil">
                     <p:menuitem value="Transferências" url="Tela_Transferencia.xhtml" icon="pi pi-fw pi-globe"/>
                     <p:menuitem value="Depósitos" url="Tela_Deposito.xhtml" icon="pi pi-fw pi-envelope"/>
@@ -33,6 +34,32 @@
                                       styleClass="rounded-button ui-button-danger" style="width:45px; height: 45px;"/>
                 </f:facet>
             </p:menubar>
+        </h:form>
+        <h:form id="formulario">
+            <p:growl id="growl" showDetail="true"/>
+            <div class="card">
+                <center>
+                    <h1>Cadastro de Agências</h1>
+                </center> 
+                <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
+                    <div class="p-field p-grid">
+                        <label for="nome" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nome da Agência</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="nome" value="#{agenciaController.agencia.nome}"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="nrAgencia" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Agência</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="cidade" value="#{usuarioController.usuario.nrAgencia}" type="text" />
+                        </div>
+                    </div>
+                    
+                    <div class="botao">
+                        <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary" value="Cadastrar" action="#{agenciaController.adicionar()}" update="formulario growl"/>
+                    </div>
+                </div>
+            </div>
         </h:form>
     </h:body>
 </html>

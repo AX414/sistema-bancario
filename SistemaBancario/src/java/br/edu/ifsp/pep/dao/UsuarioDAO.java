@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
  * @author joaov
  */
 @Stateless
-public class UsuarioDAO extends AbstratoDAO<Usuario> {
+public class UsuarioDAO{
 
     @PersistenceContext(unitName = "SistemaBancarioPU")
     private EntityManager em;
