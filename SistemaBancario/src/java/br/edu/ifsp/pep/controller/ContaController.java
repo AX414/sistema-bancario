@@ -8,17 +8,22 @@ package br.edu.ifsp.pep.controller;
 import br.edu.ifsp.pep.dao.ContaDAO;
 import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Conta;
-import br.edu.ifsp.pep.model.Usuario;
+import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author joaov
  */
-public class ContaController {
+
+@Named
+@SessionScoped
+public class ContaController implements Serializable{
 
     @Inject
     private ContaDAO contaDAO;
@@ -26,7 +31,10 @@ public class ContaController {
     private Conta cSelecionada;
     private List<Conta> contas;
     @Inject
-    private UsuarioDAO usuarioDAO;    
+    private UsuarioDAO usuarioDAO;
+    @Inject
+    private UsuarioController usuarioController;
+    private boolean minhasContas = false; 
 
     public ContaDAO getContaDAO() {
         return contaDAO;
@@ -53,6 +61,9 @@ public class ContaController {
     }
 
     public List<Conta> getContas() {
+        if (contas == null) {
+            this.contas = contaDAO.buscarTodas();
+        }
         return contas;
     }
 
@@ -60,12 +71,48 @@ public class ContaController {
         this.contas = contas;
     }
 
+    public UsuarioController getUsuarioController() {
+        return usuarioController;
+    }
+
+    public void setUsuarioController(UsuarioController usuarioController) {
+        this.usuarioController = usuarioController;
+    }
+
+    public boolean isMinhasContas() {
+        return minhasContas;
+    }
+
+    public void setMinhasContas(boolean minhasContas) {
+        this.minhasContas = minhasContas;
+    }
+    
     public UsuarioDAO getUsuarioDAO() {
         return usuarioDAO;
     }
 
     public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
+    }
+
+    public void mudaValor(){
+            if(this.minhasContas == false){
+                this.minhasContas = true;
+                addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Apenas suas Contas");
+            } else{
+                this.minhasContas = false;
+                addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Apresentar Todas as Contas");
+            }
+    }
+
+    public List apresentaContas(){
+            if(this.minhasContas == true){
+                this.setContas(contaDAO.buscarTodasMinhasContas(this.usuarioController.getUsuarioLogado()
+                                                                                      .getIdUsuario())); 
+                return contas;
+            } else {
+                return contas;
+            }
     }
 
     public void desativarConta() {

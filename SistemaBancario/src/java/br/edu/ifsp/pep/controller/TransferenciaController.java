@@ -7,17 +7,23 @@ package br.edu.ifsp.pep.controller;
 
 import br.edu.ifsp.pep.model.Transferencia;
 import br.edu.ifsp.pep.dao.TransferenciaDAO;
+import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author joaov
  */
-public class TransferenciaController {
-    @Inject
+@Named
+@SessionScoped
+public class TransferenciaController implements Serializable {
+    
+    //@Inject
     private TransferenciaDAO TransferenciaDAO;
     private Transferencia transferencia = new Transferencia();
     private Transferencia tSelecionada;

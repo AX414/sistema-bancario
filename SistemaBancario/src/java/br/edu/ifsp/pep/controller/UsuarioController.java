@@ -25,10 +25,15 @@ public class UsuarioController implements Serializable {
 
     @Inject
     private UsuarioDAO usuarioDAO;
-    private Usuario usuario = new Usuario();
+    private Usuario usuario;
     private Usuario usuarioLogado;
     private Usuario uSelecionado;
     private List<Usuario> usuarios;
+
+    public UsuarioController() {
+        System.out.println("construtor.");
+        this.usuario = new Usuario();
+    }
 
     public UsuarioDAO getUsuarioDAO() {
         return usuarioDAO;
@@ -64,7 +69,6 @@ public class UsuarioController implements Serializable {
 
     public List<Usuario> getUsuarios() {
         if (this.usuarios == null) {
-            System.out.println("Carregando...");
             this.usuarios = usuarioDAO.buscarTodos();
         }
         return usuarios;
@@ -129,7 +133,6 @@ public class UsuarioController implements Serializable {
             3 - Se um Funcionário tentar cadastrar um ADM 
             ou Funcionário, vai dar uma mensagem de erro.
         */
-       this.usuario = new Usuario();
         if (usuarioLogado.getNivelAcesso().equals("Funcionario")) {
                 
             if (this.usuario.getNivelAcesso().equals("Cliente")) {
@@ -178,17 +181,15 @@ public class UsuarioController implements Serializable {
 
     public char labelAvatar(){
         String nome = this.usuarioLogado.getNome();
-        char inicial;
+        char inicial = '?';
 
         if(usuarioLogado != null){
             inicial = nome.charAt(0);
+            return inicial;
         }else{
-            inicial = '?';
+            redirecionarPagina("Tela_Login.xhtml");       
         }
-        
-
-        return inicial;
-        
+       return inicial;
     }
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {

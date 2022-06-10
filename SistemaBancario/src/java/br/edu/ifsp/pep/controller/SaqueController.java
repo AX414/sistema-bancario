@@ -9,17 +9,23 @@ import br.edu.ifsp.pep.dao.SaqueDAO;
 import br.edu.ifsp.pep.model.Conta;
 import br.edu.ifsp.pep.model.Saque;
 import br.edu.ifsp.pep.model.Usuario;
+import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author joaov
  */
-public class SaqueController {
-    @Inject
+@Named
+@SessionScoped
+public class SaqueController implements Serializable {
+    
+    //@Inject
     private SaqueDAO saqueDAO;
     private Saque saque = new Saque();
     private Saque sSelecionado;

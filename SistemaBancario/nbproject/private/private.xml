@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/web/Tela_Cadastro_Usuario.xhtml</file>
+            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/src/java/br/edu/ifsp/pep/controller/ContaController.java</file>
+            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/web/Tela_Lista_Contas.xhtml</file>
             <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/src/java/br/edu/ifsp/pep/database/database.sql</file>
-            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/web/Tela_Principal_Administrador.xhtml</file>
+            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/src/java/br/edu/ifsp/pep/dao/ContaDAO.java</file>
+            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/src/java/br/edu/ifsp/pep/model/Usuario.java</file>
+            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/src/java/br/edu/ifsp/pep/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/joaov/Documents/GitHub/projetoFP2/SistemaBancario/src/java/br/edu/ifsp/pep/model/Conta.java</file>
         </group>
     </open-files>
 </project-private>

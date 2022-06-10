@@ -37,7 +37,6 @@ public class Saque implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "idSaque")
     private Integer idSaque;
     @NotNull

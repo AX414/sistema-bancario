@@ -6,11 +6,12 @@
 package br.edu.ifsp.pep.dao;
 
 import br.edu.ifsp.pep.model.Conta;
-import br.edu.ifsp.pep.model.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -41,5 +42,15 @@ public class ContaDAO{
         return em.createQuery("Select c FROM Conta c",Conta.class).getResultList();
     }
 
+    public List<Conta> buscarTodasMinhasContas(Integer idUsuario) {
+        TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c "
+        + "WHERE c.Usuario_idUsuario = :idUsuario",Conta.class);
+        query.setParameter("idUsuario", idUsuario);
+        try {
+            return query.getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+}
 
 }

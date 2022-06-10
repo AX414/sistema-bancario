@@ -6,11 +6,13 @@
 package br.edu.ifsp.pep.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,7 +21,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,24 +36,22 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Agencia.findByNrAgencia", query = "SELECT a FROM Agencia a WHERE a.nrAgencia = :nrAgencia")})
 public class Agencia implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idAgencia")
     private Integer idAgencia;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
+    @NotNull
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 15)
+    @NotNull
     @Column(name = "nrAgencia")
     private String nrAgencia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "agenciaidAgencia")
-    private Collection<Conta> contaCollection;
+    private ArrayList<Conta> contas;
 
     public Agencia() {
     }
@@ -61,17 +60,11 @@ public class Agencia implements Serializable {
         this.idAgencia = idAgencia;
     }
 
-    public Agencia(Integer idAgencia, String nome, String nrAgencia) {
-        this.idAgencia = idAgencia;
-        this.nome = nome;
-        this.nrAgencia = nrAgencia;
-    }
-
-    public Integer getIdAgencia() {
+    public int getIdAgencia() {
         return idAgencia;
     }
 
-    public void setIdAgencia(Integer idAgencia) {
+    public void setIdAgencia(int idAgencia) {
         this.idAgencia = idAgencia;
     }
 
@@ -91,38 +84,44 @@ public class Agencia implements Serializable {
         this.nrAgencia = nrAgencia;
     }
 
-    @XmlTransient
-    public Collection<Conta> getContaCollection() {
-        return contaCollection;
+    public ArrayList<Conta> getContas() {
+        return contas;
     }
 
-    public void setContaCollection(Collection<Conta> contaCollection) {
-        this.contaCollection = contaCollection;
+    public void setContas(ArrayList<Conta> contas) {
+        this.contas = contas;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idAgencia != null ? idAgencia.hashCode() : 0);
+        int hash = 7;
+        hash = 53 * hash + this.idAgencia;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Agencia)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Agencia other = (Agencia) object;
-        if ((this.idAgencia == null && other.idAgencia != null) || (this.idAgencia != null && !this.idAgencia.equals(other.idAgencia))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Agencia other = (Agencia) obj;
+        if (this.idAgencia != other.idAgencia) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
         return "br.edu.ifsp.pep.model.Agencia[ idAgencia=" + idAgencia + " ]";
     }
-    
+
 }

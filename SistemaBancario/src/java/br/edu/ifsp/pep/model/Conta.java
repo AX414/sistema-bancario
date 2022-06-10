@@ -40,9 +40,12 @@ public class Conta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "idConta")
     private Integer idConta;
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nrConta")
+    private String nrConta;
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "senha")
@@ -81,8 +84,9 @@ public class Conta implements Serializable {
         this.idConta = idConta;
     }
 
-    public Conta(Integer idConta, String senha, String tipo, String status, double limite, double saldo) {
+    public Conta(Integer idConta, String nrConta, String senha, String tipo, String status, double limite, double saldo) {
         this.idConta = idConta;
+        this.nrConta = nrConta;
         this.senha = senha;
         this.tipo = tipo;
         this.status = status;
@@ -98,6 +102,14 @@ public class Conta implements Serializable {
         this.idConta = idConta;
     }
 
+    public String getNrConta() {
+        return nrConta;
+    }
+
+    public void setNrConta(String nrConta) {
+        this.nrConta = nrConta;
+    }
+   
     public String getSenha() {
         return senha;
     }

@@ -39,7 +39,6 @@ public class Transferencia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "idTransferencia")
     private Integer idTransferencia;
     @NotNull

@@ -7,23 +7,32 @@ package br.edu.ifsp.pep.controller;
 
 import br.edu.ifsp.pep.dao.AgenciaDAO;
 import br.edu.ifsp.pep.model.Agencia;
+import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author joaov
  */
-public class AgenciaController {
+@Named
+@SessionScoped
+public class AgenciaController implements Serializable {
 
     @Inject
     private AgenciaDAO agenciaDAO;
     private Agencia agencia = new Agencia();
     private Agencia aSelecionada;
     private List<Agencia> agencias;
-    private UsuarioController usuarioController;
+
+    public AgenciaController() {
+        System.out.println("construtor agencia.");
+        this.agencia = new Agencia();
+    }
 
     public AgenciaDAO getAgenciaDAO() {
         return agenciaDAO;
@@ -50,6 +59,10 @@ public class AgenciaController {
     }
 
     public List<Agencia> getAgencias() {
+        if (this.agencias == null) {
+            System.out.println("Carregando...");
+            this.agencias = agenciaDAO.buscarTodas();
+        }
         return agencias;
     }
 
@@ -58,13 +71,21 @@ public class AgenciaController {
     }
 
     public void adicionar() {
-        if (usuarioController.getUsuarioLogado().getNivelAcesso().equals("Administrador")) {
-            agenciaDAO.insert(agencia);
-            this.agencias = null;
-            System.out.println("adicionou uma agencia na lista.");
-            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
-        }
+        agencia.setContas(null);
+        agenciaDAO.insert(agencia);
+        this.agencias = null;
+        System.out.println("adicionou uma agencia na lista.");
+        addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
+    }
 
+    public void excluir() {
+        if (aSelecionada != null) {
+            agenciaDAO.delete(aSelecionada);
+            this.agencias = null;
+            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Exclusão realizada");
+        } else {
+            addMessage(FacesMessage.SEVERITY_WARN, "Info Message", "Selecione uma agencia para excluir");
+        }
     }
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {

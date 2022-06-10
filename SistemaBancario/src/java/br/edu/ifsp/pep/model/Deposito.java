@@ -42,7 +42,6 @@ public class Deposito implements Serializable {
     @NotNull
     @Column(name = "idDeposito")
     private Integer idDeposito;
-    @NotNull
     @Column(name = "valor")
     private double valor;
     @NotNull

@@ -7,17 +7,23 @@ package br.edu.ifsp.pep.controller;
 
 import br.edu.ifsp.pep.model.Deposito;
 import br.edu.ifsp.pep.dao.DepositoDAO;
+import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author joaov
  */
-public class DepositoController {
-    @Inject
+@Named
+@SessionScoped
+public class DepositoController implements Serializable {
+
+    //@Inject
     private DepositoDAO depositoDAO;
     private Deposito deposito = new Deposito();
     private Deposito dSelecionado;
@@ -48,6 +54,9 @@ public class DepositoController {
     }
 
     public List<Deposito> getDepositos() {
+    if(this.depositos == null){
+        this.depositos = depositoDAO.buscarTodos();
+    }
         return depositos;
     }
 

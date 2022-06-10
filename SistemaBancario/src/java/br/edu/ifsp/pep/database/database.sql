@@ -9,7 +9,7 @@ USE banco ;
 DROP TABLE IF EXISTS Usuario ;
 
 CREATE TABLE IF NOT EXISTS Usuario (
-  idUsuario INT NOT NULL,
+  idUsuario INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(45) NOT NULL,
   senha VARCHAR(45) NOT NULL,
   cpf VARCHAR(45) NOT NULL,
@@ -40,16 +40,23 @@ SELECT * FROM Usuario;
 DROP TABLE IF EXISTS Agencia ;
 
 CREATE TABLE IF NOT EXISTS Agencia (
-  idAgencia INT NOT NULL,
+  idAgencia INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(45) NOT NULL,
   nrAgencia VARCHAR(15) NOT NULL,
   PRIMARY KEY (idAgencia))
 ENGINE = InnoDB;
 
+INSERT INTO Agencia VALUES(1,"Agencia 1","111-1");
+
+SELECT * FROM Agencia;
+SELECT MAX(idAgencia) FROM Agencia;
+
+
 DROP TABLE IF EXISTS Conta ;
 
 CREATE TABLE IF NOT EXISTS Conta (
-  idConta INT NOT NULL,
+  idConta INT NOT NULL AUTO_INCREMENT,
+  nrConta VARCHAR(45) NOT NULL,
   senha VARCHAR(45) NOT NULL,
   status VARCHAR(45) NOT NULL,
   tipo VARCHAR(45) NOT NULL,
@@ -74,10 +81,16 @@ CREATE INDEX fk_Conta_Cliente_idx ON Conta (Usuario_idUsuario ASC) VISIBLE;
 
 CREATE INDEX fk_Conta_Agencia1_idx ON Conta (Agencia_idAgencia ASC) VISIBLE;
 
+INSERT INTO Conta VALUES(1,"932-123-7","123123","Ativada","Especial",100,0,1,1);
+SELECT * FROM Conta;
+SELECT * FROM Conta WHERE Usuario_idUsuario = 1;
+
+
+
 DROP TABLE IF EXISTS Saque ;
 
 CREATE TABLE IF NOT EXISTS Saque (
-  idSaque INT NOT NULL,
+  idSaque INT NOT NULL AUTO_INCREMENT,
   valor DOUBLE NOT NULL,
   dataSaque DATE NOT NULL,
   Conta_idConta INT NOT NULL,
@@ -94,7 +107,7 @@ CREATE INDEX fk_Saque_Conta1_idx ON Saque (Conta_idConta ASC) VISIBLE;
 DROP TABLE IF EXISTS Deposito ;
 
 CREATE TABLE IF NOT EXISTS Deposito (
-  idDeposito INT NOT NULL,
+  idDeposito INT NOT NULL AUTO_INCREMENT,
   valor DOUBLE NOT NULL,
   tipo VARCHAR(45) NOT NULL,
   dataDeposito DATE NOT NULL,
@@ -113,7 +126,7 @@ CREATE INDEX fk_Deposito_Conta1_idx ON Deposito (Conta_idConta ASC) VISIBLE;
 DROP TABLE IF EXISTS Transferencia ;
 
 CREATE TABLE IF NOT EXISTS Transferencia (
-  idTransferencia INT NOT NULL,
+  idTransferencia INT NOT NULL AUTO_INCREMENT,
   data DATE NOT NULL,
   valor DOUBLE NOT NULL,
   idConta VARCHAR(45) NOT NULL COMMENT 'Esse será a id da conta que vai receber o dinheiro\n',
