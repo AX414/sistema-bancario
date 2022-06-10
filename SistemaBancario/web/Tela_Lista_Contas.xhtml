@@ -37,9 +37,8 @@
         <h:form id="formulario">
             <p:growl id="growl" showDetail="true"  />
             <div class="card">
-
-                <p:dataTable id="contas" var="item" 
-                             value="#{contaController.apresentaContas()}"
+                <p:dataTable id="contasAtivadas" var="item" 
+                             value="#{contaController.contasAtivadas}"
                              selection="#{contaController.cSelecionada}" selectionMode="single" 
                              rowKey="#{item.nrConta}"
                              stripedRows="true"
@@ -47,10 +46,10 @@
                              reflow="true"
                              rows="5"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">    
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros">    
 
                     <f:facet name="header">
-                        Agencias Cadastradas:
+                        Contas Ativas:
                     </f:facet>
 
                     <p:column headerText="Código" filterBy="#{item.idConta}" filterMatchMode="contains" sortBy="#{item.idConta}">
@@ -59,17 +58,43 @@
                     <p:column headerText="Número da Conta" filterBy="#{item.nrConta}" filterMatchMode="contains" sortBy="#{item.nrConta}">
                         <h:outputText value="#{item.nrConta}" />
                     </p:column>
-
-
                 </p:dataTable>
 
-                <p:contextMenu for="contas">
-                    <p:menuitem value="Desativar Conta" update="contas growl" icon="pi pi-times"
-                                action="#{contaController.desativarConta}"/>
+                <p:contextMenu for="contasAtivadas">
+                    <p:menuitem value="Desativar Conta" update="contasAtivadas contasDesativadas growl" icon="pi pi-times"
+                                action="#{contaController.desativarConta()}"/>
                 </p:contextMenu>
 
+
+
+                <p:dataTable id="contasDesativadas" var="item" 
+                             value="#{contaController.contasDesativadas}"
+                             selection="#{contaController.cSelecionada}" selectionMode="single" 
+                             rowKey="#{item.nrConta}"
+                             stripedRows="true"
+                             paginator="true"
+                             reflow="true"
+                             rows="5"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros">    
+
+                    <f:facet name="header">
+                        Contas Desativadas:
+                    </f:facet>
+
+                    <p:column headerText="Código" filterBy="#{item.idConta}" filterMatchMode="contains" sortBy="#{item.idConta}">
+                        <h:outputText value="#{item.idConta}" />
+                    </p:column> 
+                    <p:column headerText="Número da Conta" filterBy="#{item.nrConta}" filterMatchMode="contains" sortBy="#{item.nrConta}">
+                        <h:outputText value="#{item.nrConta}" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:contextMenu for="contasDesativadas">
+                    <p:menuitem value="Reativar Conta" update="contasAtivadas contasDesativadas growl" icon="pi pi-times"
+                                action="#{contaController.reativarConta()}"/>
+                </p:contextMenu>
             </div>
-            <p:commandButton value="TESTE" update="contas growl" action="#{contaController.mudaValor}"/>
         </h:form>
     </h:body>
 </html>

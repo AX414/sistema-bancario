@@ -81,7 +81,7 @@ CREATE INDEX fk_Conta_Cliente_idx ON Conta (Usuario_idUsuario ASC) VISIBLE;
 
 CREATE INDEX fk_Conta_Agencia1_idx ON Conta (Agencia_idAgencia ASC) VISIBLE;
 
-INSERT INTO Conta VALUES(1,"932-123-7","123123","Ativada","Especial",100,0,1,1);
+INSERT INTO Conta VALUES(1,"932","123123","Ativada","Especial",100,0,1,1);
 SELECT * FROM Conta;
 SELECT * FROM Conta WHERE Usuario_idUsuario = 1;
 

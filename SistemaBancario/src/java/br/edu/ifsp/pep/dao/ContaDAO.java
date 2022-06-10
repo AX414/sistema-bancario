@@ -38,8 +38,14 @@ public class ContaDAO{
         em.merge(c);
     }
 
-    public List<Conta> buscarTodas() {
-        return em.createQuery("Select c FROM Conta c",Conta.class).getResultList();
+    public List<Conta> buscarTodas(String status){
+       TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c WHERE c.status = :status",Conta.class);
+        query.setParameter("status", status);
+        try {
+            return query.getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     public List<Conta> buscarTodasMinhasContas(Integer idUsuario) {

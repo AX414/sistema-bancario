@@ -31,7 +31,7 @@ public class UsuarioController implements Serializable {
     private List<Usuario> usuarios;
 
     public UsuarioController() {
-        System.out.println("construtor.");
+        System.out.println("construtor usuario.");
         this.usuario = new Usuario();
     }
 
@@ -173,9 +173,9 @@ public class UsuarioController implements Serializable {
         if (uSelecionado != null) {
             usuarioDAO.delete(uSelecionado);
             this.usuarios = null;
-            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Exclusão realizada");
+            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Exclusão realizada");
         } else {
-            addMessage(FacesMessage.SEVERITY_WARN, "Info Message", "Selecione um usuario para excluir");
+            addMessage(FacesMessage.SEVERITY_WARN, "Informação", "Selecione um usuario para excluir");
         }
     }
 

@@ -43,30 +43,47 @@
                 </center> 
                 <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
                     <div class="p-field p-grid">
-                        <label for="firstname" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nome</label>
+                        <label for="nrConta" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="nome" value="#{usuarioController.usuario.nome}"/>
+                            <p:inputText id="nrConta" value="#{contaController.conta.nrConta}"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
-                        <label for="nivelAcesso" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nível de Acesso</label>
+                        <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite a Senha</label>
                         <div class="p-col-12 p-md-10">
-                            <p:selectOneMenu id="option" value="#{usuarioController.usuario.nivelAcesso}">
-                                <f:selectItem itemLabel="Cliente" itemValue="Cliente"/>
-                                <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
-                                <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
+                            <p:password id="senha1" value="#{contaController.conta.senha}" match="senha2" label="Senha 1" required="true"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite novamente</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:password id="senha2" value="#{contaController.conta.senha}" label="Senha 2" required="true"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="nrAgencia" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Agência</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="nrAgencia" value="#{contaController.nrAgencia}"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="tipo" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Tipo de Conta</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:selectOneMenu id="option" value="#{contaController.conta.tipo}">
+                                <f:selectItem itemLabel="Comum" itemValue="Comum"/>
+                                <f:selectItem itemLabel="Especial" itemValue="Especial"/>
                             </p:selectOneMenu>
                         </div>
                     </div>
                     <div class="p-field p-grid">
-                        <label for="bairro" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Cidade</label>
+                        <label for="limite" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Limite</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="cidade" value="#{usuarioController.usuario.cidade}" type="text" />
+                            <p:inputMask id="limite" value="#{contaController.conta.limite}" mask="999.99"/>
                         </div>
                     </div>
-                    
                     <div class="botao">
-                        <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary" value="Cadastrar" action="#{usuarioController.adicionar()}" update="formulario growl"/>
+                        <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary" 
+                        value="Cadastrar" action="#{contaController.adicionar()}" update="formulario growl"/>
                     </div>
                 </div>
             </div>

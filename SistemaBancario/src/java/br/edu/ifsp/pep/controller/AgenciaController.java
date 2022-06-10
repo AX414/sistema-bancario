@@ -82,9 +82,9 @@ public class AgenciaController implements Serializable {
         if (aSelecionada != null) {
             agenciaDAO.delete(aSelecionada);
             this.agencias = null;
-            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Exclusão realizada");
+            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Exclusão realizada");
         } else {
-            addMessage(FacesMessage.SEVERITY_WARN, "Info Message", "Selecione uma agencia para excluir");
+            addMessage(FacesMessage.SEVERITY_WARN, "Informação", "Selecione uma agencia para excluir");
         }
     }
 

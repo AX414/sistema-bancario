@@ -9,7 +9,9 @@ import br.edu.ifsp.pep.model.Agencia;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -35,6 +37,16 @@ public class AgenciaDAO {
 
     public List<Agencia> buscarTodas() {
         return em.createQuery("Select a FROM Agencia a", Agencia.class).getResultList();
+    }
+
+    public Agencia buscarPorNrAgencia(String nrAgencia){
+       TypedQuery<Agencia> query = em.createQuery("Select a FROM Agencia a WHERE a.nrAgencia = :nrAgencia",Agencia.class);
+        query.setParameter("nrAgencia", nrAgencia);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
 }
