@@ -44,17 +44,20 @@ public class ContaDAO{
         try {
             return query.getResultList();
         } catch (NoResultException ex) {
+            System.out.println(ex);
             return null;
         }
     }
 
-    public List<Conta> buscarTodasMinhasContas(Integer idUsuario) {
+    public List<Conta> buscarTodasMinhasContas(Integer idUsuario, String status) {
         TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c "
-        + "WHERE c.Usuario_idUsuario = :idUsuario",Conta.class);
+        + "WHERE c.Usuario_idUsuario = :idUsuario AND c.status = :status",Conta.class);
         query.setParameter("idUsuario", idUsuario);
+        query.setParameter("status", status);
         try {
             return query.getResultList();
         } catch (NoResultException ex) {
+            System.out.println(ex);
             return null;
         }
 }

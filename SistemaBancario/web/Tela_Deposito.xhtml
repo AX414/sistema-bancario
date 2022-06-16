@@ -14,7 +14,7 @@
             <p:menubar>
                 <p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{usuarioController.retornarHome()}"/>
                 <p:submenu label="Conta" icon="pi pi-fw pi-user">
-                    <p:menuitem value="Minhas Contas"  url="Tela_Lista_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
+                    <p:menuitem value="Minhas Contas"  url="Tela_Lista_Minhas_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
                         <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
@@ -35,6 +35,41 @@
                 </f:facet>
             </p:menubar>
         </h:form>
+        <h:form id="formulario">
+            <p:growl id="growl" showDetail="true"/>
+            <div class="card">
+                <center>
+                    <h1>Cadastro de Contas</h1>
+                </center> 
+                <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
+                    <div class="p-field p-grid">
+                        <label for="nrConta" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputText id="nrConta" value="#{depositoController.nrConta}"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite a Senha</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:password id="senha1" value="#{depositoController.senha}" match="senha2" label="Senha 1" required="true"/>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite novamente</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:password id="senha2" value="#{depositoController.senha}" label="Senha 2" required="true"/>
+                        </div>
+                    </div>
+                    
+                    <div class="botao">
+                        <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary" 
+                        value="Cadastrar" action="#{depositoController.adicionar()}" update="formulario growl"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+
     </h:body>
 </html>
 

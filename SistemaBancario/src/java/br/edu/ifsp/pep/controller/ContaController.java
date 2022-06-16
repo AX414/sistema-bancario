@@ -10,6 +10,7 @@ import br.edu.ifsp.pep.dao.ContaDAO;
 import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Agencia;
 import br.edu.ifsp.pep.model.Conta;
+import br.edu.ifsp.pep.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -28,18 +29,23 @@ public class ContaController implements Serializable {
 
     @Inject
     private ContaDAO contaDAO;
-    private Conta conta;
-    private Conta cSelecionada;
-    private List<Conta> contasAtivadas;
-    private List<Conta> contasDesativadas;
     @Inject
     private UsuarioDAO usuarioDAO;
     @Inject
-    private UsuarioController usuarioController;
-    //private boolean minhasContas = false; 
-    private String nrAgencia;
-    @Inject
     private AgenciaDAO agenciaDAO;
+
+    private Conta conta;
+    private Conta cSelecionada;
+        
+    private String nrAgencia;
+    private String cpf;
+    private String estado;
+    private UsuarioController usuarioController;
+
+    private List<Conta> contasAtivadas;
+    private List<Conta> contasDesativadas;
+    private List<Conta> minhasContasAtivadas;
+    private List<Conta> minhasContasDesativadas;
 
     public ContaController() {
         System.out.println("construtor conta.");
@@ -92,6 +98,31 @@ public class ContaController implements Serializable {
         this.contasDesativadas = contasDesativadas;
     }
 
+    public List<Conta> getMinhasContasAtivadas() {
+        Integer idUsuarioLogado = usuarioController.getUsuarioLogado().getIdUsuario();
+        System.out.println("ID: "+idUsuarioLogado);
+        if (minhasContasAtivadas == null) {
+            this.minhasContasAtivadas = contaDAO.buscarTodasMinhasContas(idUsuarioLogado,"Ativada");
+        }
+        return minhasContasAtivadas;
+    }
+
+    public void setMinhasContasAtivadas(List<Conta> minhasContasAtivadas) {
+        this.minhasContasAtivadas = minhasContasAtivadas;
+    }
+
+    public List<Conta> getMinhasContasDesativadas() {
+
+        if (minhasContasDesativadas == null) {
+            this.minhasContasDesativadas = contaDAO.buscarTodasMinhasContas(usuarioController.getUsuarioLogado().getIdUsuario(), "Desativada");
+        }
+        return minhasContasDesativadas;
+    }
+
+    public void setMinhasContasDesativadas(List<Conta> minhasContasDesativadas) {
+        this.minhasContasDesativadas = minhasContasDesativadas;
+    }
+
     public UsuarioController getUsuarioController() {
         return usuarioController;
     }
@@ -100,15 +131,6 @@ public class ContaController implements Serializable {
         this.usuarioController = usuarioController;
     }
 
-    /*
-    public boolean isMinhasContas() {
-        return minhasContas;
-    }
-
-    public void setMinhasContas(boolean minhasContas) {
-        this.minhasContas = minhasContas;
-    }
-     */
     public UsuarioDAO getUsuarioDAO() {
         return usuarioDAO;
     }
@@ -116,29 +138,6 @@ public class ContaController implements Serializable {
     public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
     }
-
-    /*
-    public void mudaValor(){
-            if(this.minhasContas == false){
-                this.minhasContas = true;
-                addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Apenas suas Contas");
-            } else{
-                this.minhasContas = false;
-                addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Apresentar Todas as Contas");
-            }
-    }
-
-
-    public List apresentaContas(){
-            if(this.minhasContas == true){
-                this.setContas(contaDAO.buscarTodasMinhasContas(this.usuarioController.getUsuarioLogado()
-                                                                                      .getIdUsuario())); 
-                return contas;
-            } else {
-                return contas;
-            }
-    }
-     */
 
     public String getNrAgencia() {
         return nrAgencia;
@@ -148,9 +147,40 @@ public class ContaController implements Serializable {
         this.nrAgencia = nrAgencia;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public void adicionar() {
         Agencia agenciaRetornada = agenciaDAO.buscarPorNrAgencia(nrAgencia);
-       
+        Usuario usuarioRetornado = usuarioDAO.buscarPorCPFEstado(cpf, estado, "Cliente");
+
+        if (agenciaRetornada == null) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "A agencia informada não existe. Tente novamente");
+        } else {
+            System.out.println("Agência: " + agenciaRetornada.getNome());
+            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Agência encontrada.");
+        }
+
+        if (usuarioRetornado == null) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Os dados do usuário não constam no banco de dados. Tente novamente");
+        } else {
+            System.out.println("Usuario: " + usuarioRetornado.getNome());
+            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Usuário encontrado.");
+        }
+
         //Anula os históricos de movimentações
         conta.setListaDepositos(null);
         conta.setListaSaques(null);
@@ -158,17 +188,13 @@ public class ContaController implements Serializable {
 
         conta.setSaldo(0);
         conta.setStatus("Ativada");
-        
-        
-        if(agenciaRetornada == null){
-            addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "A agencia informada não existe. Tente novamente");
-            return;
-        }
+        conta.setUsuarioidUsuario(usuarioRetornado);
+        conta.setAgenciaidAgencia(agenciaRetornada);
 
         if (conta.getTipo().equals("Comum")) {
             if (conta.getLimite() != 0) {
                 conta.setLimite(0);
-                addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Contas Comuns não possuem limite, o valor inserido foi desconsiderado.");
+                addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Contas Comuns não possuem limite, o valor do limite é R$ 0.");
             }
         }
 

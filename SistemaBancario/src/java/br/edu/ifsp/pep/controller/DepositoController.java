@@ -5,8 +5,10 @@
  */
 package br.edu.ifsp.pep.controller;
 
+import br.edu.ifsp.pep.dao.ContaDAO;
 import br.edu.ifsp.pep.model.Deposito;
 import br.edu.ifsp.pep.dao.DepositoDAO;
+import br.edu.ifsp.pep.dao.UsuarioDAO;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -23,11 +25,19 @@ import javax.inject.Named;
 @SessionScoped
 public class DepositoController implements Serializable {
 
-    //@Inject
+    @Inject
     private DepositoDAO depositoDAO;
+    @Inject 
+    private ContaDAO contaDAO;
+    @Inject 
+    private UsuarioDAO usuarioDAO;
+
     private Deposito deposito = new Deposito();
     private Deposito dSelecionado;
     private List<Deposito> depositos;
+    private String nrConta;
+    private String senha;
+    
 
     public DepositoDAO getDepositoDAO() {
         return depositoDAO;
@@ -37,6 +47,22 @@ public class DepositoController implements Serializable {
         this.depositoDAO = depositoDAO;
     }
 
+    public ContaDAO getContaDAO() {
+        return contaDAO;
+    }
+
+    public void setContaDAO(ContaDAO contaDAO) {
+        this.contaDAO = contaDAO;
+    }
+
+    public UsuarioDAO getUsuarioDAO() {
+        return usuarioDAO;
+    }
+
+    public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
+    }
+    
     public Deposito getDeposito() {
         return deposito;
     }
@@ -63,6 +89,24 @@ public class DepositoController implements Serializable {
     public void setDepositos(List<Deposito> depositos) {
         this.depositos = depositos;
     }
+
+    public String getNrConta() {
+        return nrConta;
+    }
+
+    public void setNrConta(String nrConta) {
+        this.nrConta = nrConta;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().

@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Agencia (
   PRIMARY KEY (idAgencia))
 ENGINE = InnoDB;
 
-INSERT INTO Agencia VALUES(1,"Agencia 1","111-1");
+INSERT INTO Agencia VALUES(1,"Agencia 1","1");
 
 SELECT * FROM Agencia;
 SELECT MAX(idAgencia) FROM Agencia;
@@ -84,8 +84,6 @@ CREATE INDEX fk_Conta_Agencia1_idx ON Conta (Agencia_idAgencia ASC) VISIBLE;
 INSERT INTO Conta VALUES(1,"932","123123","Ativada","Especial",100,0,1,1);
 SELECT * FROM Conta;
 SELECT * FROM Conta WHERE Usuario_idUsuario = 1;
-
-
 
 DROP TABLE IF EXISTS Saque ;
 

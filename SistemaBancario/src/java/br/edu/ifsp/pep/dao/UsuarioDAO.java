@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
  * @author joaov
  */
 @Stateless
-public class UsuarioDAO{
+public class UsuarioDAO {
 
     @PersistenceContext(unitName = "SistemaBancarioPU")
     private EntityManager em;
@@ -35,7 +35,7 @@ public class UsuarioDAO{
     }
 
     public List<Usuario> buscarTodos() {
-        return em.createQuery("Select u FROM Usuario u",Usuario.class).getResultList();
+        return em.createQuery("Select u FROM Usuario u", Usuario.class).getResultList();
     }
 
     public Usuario buscarPorCPFSenha(String cpf, String senha, String nivelAcesso) {
@@ -49,6 +49,24 @@ public class UsuarioDAO{
         try {
             return query.getSingleResult();
         } catch (NoResultException ex) {
+            System.out.println(ex);
+            return null;
+        }
+
+    }
+
+    public Usuario buscarPorCPFEstado(String cpf, String estado, String nivelAcesso) {
+        TypedQuery<Usuario> query
+                = em.createQuery("SELECT u FROM Usuario u WHERE u.cpf = :cpf "
+                        + "AND u.estado = :estado AND u.nivelAcesso = :nivelAcesso", Usuario.class);
+        query.setParameter("cpf", cpf);
+        query.setParameter("estado", estado);
+        query.setParameter("nivelAcesso", nivelAcesso);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            System.out.println(ex);
             return null;
         }
 

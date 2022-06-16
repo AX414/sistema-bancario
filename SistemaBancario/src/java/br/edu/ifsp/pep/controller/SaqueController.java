@@ -25,7 +25,7 @@ import javax.inject.Named;
 @SessionScoped
 public class SaqueController implements Serializable {
     
-    //@Inject
+    @Inject
     private SaqueDAO saqueDAO;
     private Saque saque = new Saque();
     private Saque sSelecionado;

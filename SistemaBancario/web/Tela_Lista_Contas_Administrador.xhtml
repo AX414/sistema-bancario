@@ -14,7 +14,7 @@
             <p:menubar>
                 <p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{usuarioController.retornarHome()}"/>
                 <p:submenu label="Conta" icon="pi pi-fw pi-user">
-                    <p:menuitem value="Minhas Contas"  url="Tela_Lista_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
+                    <p:menuitem value="Minhas Contas"  url="Tela_Lista_Minhas_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
                         <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
@@ -58,6 +58,12 @@
                     <p:column headerText="Número da Conta" filterBy="#{item.nrConta}" filterMatchMode="contains" sortBy="#{item.nrConta}">
                         <h:outputText value="#{item.nrConta}" />
                     </p:column>
+                    <p:column headerText="Dono da Conta" filterBy="#{item.usuarioidUsuario.nome}" filterMatchMode="contains" sortBy="#{item.usuarioidUsuario.nome}">
+                        <h:outputText value="#{item.usuarioidUsuario.nome}" />
+                    </p:column>
+                    <p:column headerText="Tipo de Conta" filterBy="#{item.tipo}" filterMatchMode="contains" sortBy="#{item.tipo}">
+                        <h:outputText value="#{item.tipo}" />
+                    </p:column>
                 </p:dataTable>
 
                 <p:contextMenu for="contasAtivadas">
@@ -87,6 +93,12 @@
                     </p:column> 
                     <p:column headerText="Número da Conta" filterBy="#{item.nrConta}" filterMatchMode="contains" sortBy="#{item.nrConta}">
                         <h:outputText value="#{item.nrConta}" />
+                    </p:column>
+                    <p:column headerText="Dono da Conta" filterBy="#{item.usuarioidUsuario.nome}" filterMatchMode="contains" sortBy="#{item.usuarioidUsuario.nome}">
+                        <h:outputText value="#{item.usuarioidUsuario.nome}" />
+                    </p:column>
+                    <p:column headerText="Tipo de Conta" filterBy="#{item.tipo}" filterMatchMode="contains" sortBy="#{item.tipo}">
+                        <h:outputText value="#{item.tipo}" />
                     </p:column>
                 </p:dataTable>
 

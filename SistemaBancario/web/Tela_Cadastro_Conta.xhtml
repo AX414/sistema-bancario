@@ -14,7 +14,7 @@
             <p:menubar>
                 <p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{usuarioController.retornarHome()}"/>
                 <p:submenu label="Conta" icon="pi pi-fw pi-user">
-                    <p:menuitem value="Minhas Contas"  url="Tela_Lista_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
+                    <p:menuitem value="Minhas Contas"  url="Tela_Lista_Minhas_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
                         <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
@@ -49,6 +49,46 @@
                         </div>
                     </div>
                     <div class="p-field p-grid">
+                        <label for="cpf" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">CPF</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:inputMask id="cpf" value="#{contaController.cpf}" mask="999.999.999-99" type="text" />
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="estado" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Estado</label>
+                        <div class="p-col-12 p-md-10">
+                            <p:selectOneMenu id="estado" value="#{contaController.estado}">
+                                <f:selectItem itemLabel="AC" itemValue="AC"/>
+                                <f:selectItem itemLabel="AL" itemValue="AL"/>
+                                <f:selectItem itemLabel="AP" itemValue="AP"/>
+                                <f:selectItem itemLabel="AM" itemValue="AM"/>
+                                <f:selectItem itemLabel="BA" itemValue="BA"/>
+                                <f:selectItem itemLabel="CE" itemValue="CE"/>
+                                <f:selectItem itemLabel="DF" itemValue="DF"/>
+                                <f:selectItem itemLabel="ES" itemValue="ES"/>
+                                <f:selectItem itemLabel="GO" itemValue="GO"/>
+                                <f:selectItem itemLabel="MA" itemValue="MA"/>
+                                <f:selectItem itemLabel="MT" itemValue="MT"/>
+                                <f:selectItem itemLabel="MS" itemValue="MS"/>
+                                <f:selectItem itemLabel="MG" itemValue="MG"/>
+                                <f:selectItem itemLabel="PA" itemValue="PA"/>
+                                <f:selectItem itemLabel="PB" itemValue="PB"/>
+                                <f:selectItem itemLabel="PR" itemValue="PR"/>
+                                <f:selectItem itemLabel="PE" itemValue="PE"/>
+                                <f:selectItem itemLabel="PI" itemValue="PI"/>
+                                <f:selectItem itemLabel="RJ" itemValue="RJ"/>
+                                <f:selectItem itemLabel="RN" itemValue="RN"/>
+                                <f:selectItem itemLabel="RS" itemValue="RS"/>
+                                <f:selectItem itemLabel="RO" itemValue="RO"/>
+                                <f:selectItem itemLabel="RR" itemValue="RR"/>
+                                <f:selectItem itemLabel="SC" itemValue="SC"/>
+                                <f:selectItem itemLabel="SP" itemValue="SP"/>
+                                <f:selectItem itemLabel="SE" itemValue="SE"/>
+                                <f:selectItem itemLabel="TO" itemValue="TO"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
                         <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite a Senha</label>
                         <div class="p-col-12 p-md-10">
                             <p:password id="senha1" value="#{contaController.conta.senha}" match="senha2" label="Senha 1" required="true"/>
@@ -78,7 +118,7 @@
                     <div class="p-field p-grid">
                         <label for="limite" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Limite</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputMask id="limite" value="#{contaController.conta.limite}" mask="999.99"/>
+                            <p:inputNumber id="limite" value="#{contaController.conta.limite}" symbol="R$ "/>
                         </div>
                     </div>
                     <div class="botao">
