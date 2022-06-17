@@ -37,7 +37,7 @@
         <h:form id="formulario">
             <p:growl id="growl" showDetail="true"  />
             <div class="card">
-                <p:dataTable id="contasAtivadas" var="item" 
+                <p:dataTable id="minhasContasAtivadas" var="item" 
                              value="#{contaController.minhasContasAtivadas}"
                              selection="#{contaController.cSelecionada}" selectionMode="single" 
                              rowKey="#{item.nrConta}"
@@ -64,9 +64,16 @@
                     <p:column headerText="Tipo de Conta" filterBy="#{item.tipo}" filterMatchMode="contains" sortBy="#{item.tipo}">
                         <h:outputText value="#{item.tipo}" />
                     </p:column>
+                    <p:column headerText="Saldo da Conta (R$)" filterBy="#{item.saldo}" filterMatchMode="contains" sortBy="#{item.saldo}">
+                        <h:outputText value="#{item.saldo}"/>
+                    </p:column>
                 </p:dataTable>
+                <p:contextMenu for="minhasContasAtivadas">
+                    <p:menuitem value="Visualizar" update="contaDetalhar" icon="pi pi-search"
+                                oncomplete="PF('contaDialog').show()"/>
+                </p:contextMenu>
 
-                <p:dataTable id="contasDesativadas" var="item" 
+                <p:dataTable id="minhasContasDesativadas" var="item" 
                              value="#{contaController.minhasContasDesativadas}"
                              selection="#{contaController.cSelecionada}" selectionMode="single" 
                              rowKey="#{item.nrConta}"
@@ -93,12 +100,36 @@
                     <p:column headerText="Tipo de Conta" filterBy="#{item.tipo}" filterMatchMode="contains" sortBy="#{item.tipo}">
                         <h:outputText value="#{item.tipo}" />
                     </p:column>
+                    <p:column headerText="Saldo da Conta (R$)" filterBy="#{item.saldo}" filterMatchMode="contains" sortBy="#{item.saldo}">
+                        <h:outputText value="#{item.saldo}"/>
+                    </p:column>
                 </p:dataTable>
-
-                <p:contextMenu for="contasDesativadas">
-                    <p:menuitem value="Reativar Conta" update="contasAtivadas contasDesativadas growl" icon="pi pi-times"
-                                action="#{contaController.reativarConta()}"/>
+                
+                <p:contextMenu for="minhasContasDesativadas">
+                    <p:menuitem value="Visualizar" update="contaDetalhar" icon="pi pi-search"
+                                oncomplete="PF('contaDialog').show()"/>
                 </p:contextMenu>
+
+                <p:dialog header="Dados da Conta" widgetVar="contaDialog" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="false">
+                    <p:outputPanel id="contaDetalhar" style="text-align:left;">
+                        <p:column rendered="#{not empty contaController.cSelecionada}">
+                            <div class="account">
+                                <div class="account-grid-item border-0" style="margin-bottom: 0">
+                                    <div class="account-grid-item-content">
+                                        <div class="account-item"><b>Número da conta:</b> #{contaController.cSelecionada.nrConta}</div>
+                                        <div class="account-item"><b>Senha da conta:</b> #{contaController.cSelecionada.senha}</div>
+                                        <div class="account-item"><b>Tipo de conta:</b> #{contaController.cSelecionada.tipo}</div>
+                                        <div class="account-item"><b>Status da conta:</b> #{contaController.cSelecionada.status}</div>
+                                        <div class="account-item"><b>Limite da conta:</b> R$ #{contaController.cSelecionada.limite}</div>
+                                        <div class="account-item"><b>Saldo:</b> R$ #{contaController.cSelecionada.saldo}</div>
+                                    </div>  
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:outputPanel>
+                </p:dialog>
+
             </div>
         </h:form>
     </h:body>

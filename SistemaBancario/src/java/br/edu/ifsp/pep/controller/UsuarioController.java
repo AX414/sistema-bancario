@@ -32,6 +32,7 @@ public class UsuarioController implements Serializable {
 
     public UsuarioController() {
         System.out.println("construtor usuario.");
+        this.uSelecionado = null;
         this.usuario = new Usuario();
     }
 

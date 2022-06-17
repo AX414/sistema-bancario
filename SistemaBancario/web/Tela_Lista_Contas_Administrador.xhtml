@@ -39,7 +39,7 @@
             <div class="card">
                 <p:dataTable id="contasAtivadas" var="item" 
                              value="#{contaController.contasAtivadas}"
-                             selection="#{contaController.cSelecionada}" selectionMode="single" 
+                             selection="#{contaController.cAtivadaSelecionada}" selectionMode="single" 
                              rowKey="#{item.nrConta}"
                              stripedRows="true"
                              paginator="true"
@@ -75,7 +75,7 @@
 
                 <p:dataTable id="contasDesativadas" var="item" 
                              value="#{contaController.contasDesativadas}"
-                             selection="#{contaController.cSelecionada}" selectionMode="single" 
+                             selection="#{contaController.cDesativadaSelecionada}" selectionMode="single" 
                              rowKey="#{item.nrConta}"
                              stripedRows="true"
                              paginator="true"

@@ -13,7 +13,7 @@ import br.edu.ifsp.pep.model.Conta;
 import br.edu.ifsp.pep.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ import javax.inject.Named;
  * @author joaov
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class ContaController implements Serializable {
 
     @Inject
@@ -33,14 +33,17 @@ public class ContaController implements Serializable {
     private UsuarioDAO usuarioDAO;
     @Inject
     private AgenciaDAO agenciaDAO;
+    @Inject
+    private UsuarioController usuarioController;
 
     private Conta conta;
     private Conta cSelecionada;
+    private Conta cAtivadaSelecionada;
+    private Conta cDesativadaSelecionada;
         
     private String nrAgencia;
     private String cpf;
     private String estado;
-    private UsuarioController usuarioController;
 
     private List<Conta> contasAtivadas;
     private List<Conta> contasDesativadas;
@@ -49,6 +52,10 @@ public class ContaController implements Serializable {
 
     public ContaController() {
         System.out.println("construtor conta.");
+        this.cSelecionada = null;
+        this.cAtivadaSelecionada = null;
+        this.cDesativadaSelecionada = null;
+
         this.conta = new Conta();
     }
 
@@ -76,6 +83,22 @@ public class ContaController implements Serializable {
         this.cSelecionada = cSelecionada;
     }
 
+    public Conta getcAtivadaSelecionada() {
+        return cAtivadaSelecionada;
+    }
+
+    public void setcAtivadaSelecionada(Conta cAtivadaSelecionada) {
+        this.cAtivadaSelecionada = cAtivadaSelecionada;
+    }
+
+    public Conta getcDesativadaSelecionada() {
+        return cDesativadaSelecionada;
+    }
+
+    public void setcDesativadaSelecionada(Conta cDesativadaSelecionada) {
+        this.cDesativadaSelecionada = cDesativadaSelecionada;
+    }
+
     public List<Conta> getContasAtivadas() {
         if (contasAtivadas == null) {
             this.contasAtivadas = contaDAO.buscarTodas("Ativada");
@@ -99,10 +122,8 @@ public class ContaController implements Serializable {
     }
 
     public List<Conta> getMinhasContasAtivadas() {
-        Integer idUsuarioLogado = usuarioController.getUsuarioLogado().getIdUsuario();
-        System.out.println("ID: "+idUsuarioLogado);
         if (minhasContasAtivadas == null) {
-            this.minhasContasAtivadas = contaDAO.buscarTodasMinhasContas(idUsuarioLogado,"Ativada");
+            this.minhasContasAtivadas = contaDAO.buscarTodasMinhasContas(usuarioController.getUsuarioLogado(),"Ativada");
         }
         return minhasContasAtivadas;
     }
@@ -114,7 +135,7 @@ public class ContaController implements Serializable {
     public List<Conta> getMinhasContasDesativadas() {
 
         if (minhasContasDesativadas == null) {
-            this.minhasContasDesativadas = contaDAO.buscarTodasMinhasContas(usuarioController.getUsuarioLogado().getIdUsuario(), "Desativada");
+            this.minhasContasDesativadas = contaDAO.buscarTodasMinhasContas(usuarioController.getUsuarioLogado(), "Desativada");
         }
         return minhasContasDesativadas;
     }
@@ -205,9 +226,9 @@ public class ContaController implements Serializable {
     }
 
     public void desativarConta() {
-        if (cSelecionada != null) {
-            cSelecionada.setStatus("Desativada");
-            contaDAO.edit(cSelecionada);
+        if (cAtivadaSelecionada != null) {
+            cAtivadaSelecionada.setStatus("Desativada");
+            contaDAO.edit(cAtivadaSelecionada);
             this.contasAtivadas = null;
             this.contasDesativadas = null;
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Conta Desativada");
@@ -217,14 +238,14 @@ public class ContaController implements Serializable {
     }
 
     public void reativarConta() {
-        if (cSelecionada != null) {
-            cSelecionada.setStatus("Ativada");
-            contaDAO.edit(cSelecionada);
+        if (cDesativadaSelecionada != null) {
+            cDesativadaSelecionada.setStatus("Ativada");
+            contaDAO.edit(cDesativadaSelecionada);
             this.contasAtivadas = null;
             this.contasDesativadas = null;
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Conta Ativada");
         } else {
-            addMessage(FacesMessage.SEVERITY_WARN, "Informação", "Selecione uma conta para reativar");
+            addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Selecione uma conta para reativar");
         }
     }
 

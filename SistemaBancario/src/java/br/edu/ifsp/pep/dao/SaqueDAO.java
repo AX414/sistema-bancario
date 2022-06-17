@@ -5,11 +5,14 @@
  */
 package br.edu.ifsp.pep.dao;
 
+import br.edu.ifsp.pep.model.Conta;
 import br.edu.ifsp.pep.model.Saque;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -17,7 +20,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class SaqueDAO {
-    
+
     @PersistenceContext(unitName = "SistemaBancarioPU")
     private EntityManager em;
 
@@ -37,6 +40,17 @@ public class SaqueDAO {
     }
 
     public List<Saque> buscarTodos() {
-        return em.createQuery("Select s FROM Saque s",Saque.class).getResultList();
+        return em.createQuery("Select s FROM Saque s", Saque.class).getResultList();
+    }
+
+    public List<Saque> buscarTodosSaquesPorConta(Conta idConta) {
+        TypedQuery<Saque> query = em.createQuery("Select s FROM Saque s WHERE s.contaidConta = :idConta", Saque.class);
+        query.setParameter("idConta", idConta);
+        try {
+            return query.getResultList();
+        } catch (NoResultException ex) {
+            System.out.println(ex);
+            return null;
+        }
     }
 }

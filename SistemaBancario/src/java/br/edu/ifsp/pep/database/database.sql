@@ -27,13 +27,14 @@ ENGINE = InnoDB;
 INSERT INTO Usuario VALUES(1,"João Porcel","123","444.444.444-44","Cliente","SP","Presidente Epitácio",
 "Bairro A","Rua A","3-35","(18)98134-3434","jp@hotmail.com");
 
-
 INSERT INTO Usuario VALUES(2,"Funcionario","123","555.555.555-55","Funcionario","SP","Presidente Epitácio",
 "Bairro B","Rua V","3-35","(18)98135-3132","Não Informado");
 
-
 INSERT INTO Usuario VALUES(3,"Admin","123","666.666.666-66","Administrador","SP","Presidente Epitácio",
 "Bairro A","Rua B","13-20","(18)98134-3434","admin@hotmail.com");
+
+INSERT INTO Usuario VALUES(4,"Marcos","123","333.333.333-33","Cliente","SP","Presidente Prudente",
+"Bairro B","Rua C","3-35","(18)98135-3537","ashe@hotmail.com");
 
 SELECT * FROM Usuario;
 
@@ -46,11 +47,11 @@ CREATE TABLE IF NOT EXISTS Agencia (
   PRIMARY KEY (idAgencia))
 ENGINE = InnoDB;
 
-INSERT INTO Agencia VALUES(1,"Agencia 1","1");
+INSERT INTO Agencia VALUES(1,"Agência 1","1");
+INSERT INTO Agencia VALUES(1,"Agência 2","2");
+INSERT INTO Agencia VALUES(1,"Agência 3","3");
 
 SELECT * FROM Agencia;
-SELECT MAX(idAgencia) FROM Agencia;
-
 
 DROP TABLE IF EXISTS Conta ;
 
@@ -81,9 +82,10 @@ CREATE INDEX fk_Conta_Cliente_idx ON Conta (Usuario_idUsuario ASC) VISIBLE;
 
 CREATE INDEX fk_Conta_Agencia1_idx ON Conta (Agencia_idAgencia ASC) VISIBLE;
 
-INSERT INTO Conta VALUES(1,"932","123123","Ativada","Especial",100,0,1,1);
+INSERT INTO Conta VALUES(1,"1","123","Ativada","Especial",100,1000,1,1);
+INSERT INTO Conta VALUES(2,"4","123","Ativada","Comum",0,0,4,1);
+
 SELECT * FROM Conta;
-SELECT * FROM Conta WHERE Usuario_idUsuario = 1;
 
 DROP TABLE IF EXISTS Saque ;
 
@@ -101,6 +103,8 @@ CREATE TABLE IF NOT EXISTS Saque (
 ENGINE = InnoDB;
 
 CREATE INDEX fk_Saque_Conta1_idx ON Saque (Conta_idConta ASC) VISIBLE;
+
+SELECT * FROM Saque;
 
 DROP TABLE IF EXISTS Deposito ;
 

@@ -43,8 +43,9 @@
                 </div>
 
 
-                <p:commandButton icon="pi pi-check" value="Entrar" action="#{usuarioController.autenticar()}" update="formulario growl"/>
-                <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-danger" resetValues="true" update="formulario" style="margin-left: .5em"/>
+                <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary"
+                icon="pi pi-check" value="Entrar" action="#{usuarioController.autenticar()}" 
+                update="formulario growl"/>
 
             </h:form>
         </p:card>

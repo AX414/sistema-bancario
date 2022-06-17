@@ -6,6 +6,7 @@
 package br.edu.ifsp.pep.dao;
 
 import br.edu.ifsp.pep.model.Conta;
+import br.edu.ifsp.pep.model.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ import javax.persistence.TypedQuery;
  * @author joaov
  */
 @Stateless
-public class ContaDAO{
+public class ContaDAO {
 
     @PersistenceContext(unitName = "SistemaBancarioPU")
     private EntityManager em;
@@ -38,8 +39,8 @@ public class ContaDAO{
         em.merge(c);
     }
 
-    public List<Conta> buscarTodas(String status){
-       TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c WHERE c.status = :status",Conta.class);
+    public List<Conta> buscarTodas(String status) {
+        TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c WHERE c.status = :status", Conta.class);
         query.setParameter("status", status);
         try {
             return query.getResultList();
@@ -49,9 +50,9 @@ public class ContaDAO{
         }
     }
 
-    public List<Conta> buscarTodasMinhasContas(Integer idUsuario, String status) {
+    public List<Conta> buscarTodasMinhasContas(Usuario idUsuario, String status) {
         TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c "
-        + "WHERE c.Usuario_idUsuario = :idUsuario AND c.status = :status",Conta.class);
+                + "WHERE c.usuarioidUsuario = :idUsuario AND c.status = :status", Conta.class);
         query.setParameter("idUsuario", idUsuario);
         query.setParameter("status", status);
         try {
@@ -60,6 +61,21 @@ public class ContaDAO{
             System.out.println(ex);
             return null;
         }
-}
+    }
+
+    public Conta buscarContaPorNrSenhaId(String nrConta, String senha, Usuario idUsuario) {
+        TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c "
+                + "WHERE c.nrConta = :nrConta AND c.senha = :senha "
+                + "AND c.usuarioidUsuario = :idUsuario", Conta.class);
+        query.setParameter("nrConta", nrConta);
+        query.setParameter("senha", senha);
+        query.setParameter("idUsuario", idUsuario);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
 
 }
