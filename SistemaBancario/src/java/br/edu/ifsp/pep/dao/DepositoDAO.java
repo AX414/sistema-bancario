@@ -6,6 +6,7 @@
 package br.edu.ifsp.pep.dao;
 
 import br.edu.ifsp.pep.model.Deposito;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -44,6 +45,18 @@ public class DepositoDAO {
 
     public List<Deposito> buscarTodosPorTipo(String tipo) {
         TypedQuery<Deposito> query = em.createQuery("Select d FROM Deposito d WHERE d.tipo = :tipo", Deposito.class);
+        query.setParameter("tipo", tipo);
+        try {
+            return query.getResultList();
+        } catch (NoResultException ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public List<Deposito> buscarTodosPorTipoDataAutorizacao(String tipo) {
+        TypedQuery<Deposito> query = em.createQuery("Select d FROM Deposito d WHERE d.tipo = :tipo "
+        + "AND d.dataAutorizacao is null", Deposito.class);
         query.setParameter("tipo", tipo);
         try {
             return query.getResultList();

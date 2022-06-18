@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Efetuar Depósito</title>
+        <title>Efetuar Depósitos</title>
         <h:outputStylesheet name="/css/primeflex.min.css" />
         <h:outputStylesheet name="/css/style.css" />
     </h:head>
@@ -44,7 +44,7 @@
                 </center> 
                 <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
                     <div class="p-field p-grid">
-                        <label for="nome" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
+                        <label for="nrConta" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
                         <div class="p-col-12 p-md-10">
                             <p:inputText id="nome" value="#{depositoController.nrConta}"/>
                         </div>
@@ -67,7 +67,7 @@
                     <div class="p-field p-grid">
                         <label for="valor" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Valor (R$)</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputNumber id="valor" value="#{depositoController.deposito.valor}" symbol="R$ "/>
+                            <p:inputNumber id="valor" value="#{depositoController.valor}" symbol="R$ "/>
                         </div>
                     </div>
                     <div class="botao">

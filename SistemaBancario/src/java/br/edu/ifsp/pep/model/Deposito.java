@@ -39,7 +39,6 @@ public class Deposito implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "idDeposito")
     private Integer idDeposito;
     @Column(name = "valor")

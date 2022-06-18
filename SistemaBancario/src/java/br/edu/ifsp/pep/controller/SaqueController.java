@@ -132,9 +132,11 @@ public class SaqueController implements Serializable {
         int erro = 0;
 
         if (contaRetornada == null) {
+            erro = 1;
             addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Você não possui nenhuma conta com esses dados. Tente novamente");
         } else {
             if (contaRetornada.getStatus().equals("Desativada")) {
+                erro = 1;
                 addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "A conta foi encontrada, porém ela está desativada. "
                         + "            Insira uma conta ativa para efetuar a operação.");
             } else {

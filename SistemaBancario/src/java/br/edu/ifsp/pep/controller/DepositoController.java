@@ -42,7 +42,7 @@ public class DepositoController implements Serializable {
     private double valor;
     private Date dataDeposito;
     private Date dataAutorizacao;
-    private List<Deposito> depositos;
+    private List<Deposito> depositosCaixa;
     private List<Deposito> depositosEnvelope;
 
     public DepositoController() {
@@ -83,20 +83,20 @@ public class DepositoController implements Serializable {
         this.dSelecionado = dSelecionado;
     }
 
-    public List<Deposito> getDepositos() {
-        if (this.depositos == null) {
-            this.depositos = depositoDAO.buscarTodos();
+    public List<Deposito> getDepositosCaixa() {
+        if (this.depositosCaixa == null) {
+            this.depositosCaixa = depositoDAO.buscarTodosPorTipo("Caixa");
         }
-        return depositos;
+        return depositosCaixa;
     }
 
-    public void setDepositos(List<Deposito> depositos) {
-        this.depositos = depositos;
+    public void setDepositosCaixa(List<Deposito> depositosCaixa) {
+        this.depositosCaixa = depositosCaixa;
     }
 
     public List<Deposito> getDepositosEnvelope() {
         if (this.depositosEnvelope == null) {
-            this.depositosEnvelope = depositoDAO.buscarTodosPorTipo("Envelope");
+            this.depositosEnvelope = depositoDAO.buscarTodosPorTipoDataAutorizacao("Envelope");
         }
         return depositosEnvelope;
     }
@@ -104,7 +104,7 @@ public class DepositoController implements Serializable {
     public void setDepositosEnvelope(List<Deposito> depositosEnvelope) {
         this.depositosEnvelope = depositosEnvelope;
     }
-    
+
     public String getNrConta() {
         return nrConta;
     }
@@ -132,11 +132,14 @@ public class DepositoController implements Serializable {
     public void efetuarDeposito() {
         Conta contaRetornada = contaDAO.buscarContaPorNrSenhaId(nrConta, senha, usuarioController.getUsuarioLogado());
         double saldoRetornado;
+        int erro = 0;
 
         if (contaRetornada == null) {
+            erro = 1;
             addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Você não possui nenhuma conta com esses dados. Tente novamente");
         } else {
             if (contaRetornada.getStatus().equals("Desativada")) {
+                erro = 1;
                 addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "A conta foi encontrada, porém ela está desativada. "
                         + "            Insira uma conta ativa para efetuar a operação.");
             } else {
@@ -144,46 +147,62 @@ public class DepositoController implements Serializable {
                 addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Conta encontrada.");
             }
 
-            saldoRetornado = contaRetornada.getSaldo();
+            if (erro == 0) {
 
-            //insere os valores do deposito e salva ele no banco
-            //formatando a data
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            dataDeposito = new Date();
-            sdf.format(dataDeposito);
+                saldoRetornado = contaRetornada.getSaldo();
 
-            deposito.setDataDeposito(dataDeposito);
-            deposito.setContaidConta(contaRetornada);
-            deposito.setValor(valor);
-            deposito.setTipo("Caixa");
-            
-           
-            if (deposito.getTipo().equals("Caixa")) {
-                //alterando o saldo da conta
-                contaRetornada.setSaldo(saldoRetornado + valor);
-                contaDAO.edit(contaRetornada);
-                deposito.setTipo("Caixa");
-            } else {
-                //se é do tipo envelope, o saldo da conta 
-                //só vai mudar se o deposito receber a data de autorização
-                deposito.setTipo("Envelope");
+                //insere os valores do deposito e salva ele no banco
+                //formatando a data
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                dataDeposito = new Date();
+                sdf.format(dataDeposito);
+
+                deposito.setDataDeposito(dataDeposito);
+                deposito.setContaidConta(contaRetornada);
+                deposito.setValor(valor);
+                deposito.setDataAutorizacao(null);
+
+                if (deposito.getTipo().equals("Caixa")) {
+                    //alterando o saldo da conta
+                    contaRetornada.setSaldo(saldoRetornado + valor);
+                    contaDAO.edit(contaRetornada);
+                    deposito.setTipo("Caixa");
+                } else {
+                    //se é do tipo envelope, o saldo da conta 
+                    //só vai mudar se o deposito receber a data de autorização
+                    deposito.setTipo("Envelope");
+                    addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Espere o envelope ser aprovado para o deposito cair na conta.");
+                }
+
+                depositoDAO.insert(deposito);
+                this.depositosCaixa = null;
+                this.depositosEnvelope = null;
+                addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Deposito efetuado com sucesso.");
+            }else{
+                 addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Não foi possível efetuar o deposito, tente novamente.");
             }
-
-            depositoDAO.insert(deposito);
-            this.depositos = null;
-            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Deposito efetuado com sucesso.");
         }
 
     }
 
-    public void aprovarDeposito(){
-        if (dSelecionado != null) {
+    public void aprovarDeposito() {
+        Conta contaDeposito = dSelecionado.getContaidConta();
+        double saldoConta = contaDeposito.getSaldo();
+
+        if (dSelecionado != null && dSelecionado.getDataAutorizacao() == null) {
+
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             dataAutorizacao = new Date();
             sdf.format(dataAutorizacao);
+
+            //altera o deposito
             dSelecionado.setDataAutorizacao(dataAutorizacao);
             depositoDAO.edit(dSelecionado);
-            this.depositos = null;
+            //deposita o valor na conta vinculada ao deposito
+            contaDeposito.setSaldo(saldoConta + dSelecionado.getValor());
+            contaDAO.edit(contaDeposito);
+
+            this.depositosCaixa = null;
             this.depositosEnvelope = null;
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Deposito Aprovado");
         } else {

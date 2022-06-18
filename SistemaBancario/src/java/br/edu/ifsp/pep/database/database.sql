@@ -125,6 +125,9 @@ ENGINE = InnoDB;
 
 CREATE INDEX fk_Deposito_Conta1_idx ON Deposito (Conta_idConta ASC) VISIBLE;
 
+SELECT * FROM Deposito;
+DELETE FROM Deposito WHERE idDeposito = 1;
+
 DROP TABLE IF EXISTS Transferencia ;
 
 CREATE TABLE IF NOT EXISTS Transferencia (

@@ -42,7 +42,7 @@
                 <p:dataTable id="depositosEnvelope" var="item" 
                              value="#{depositoController.depositosEnvelope}"
                              selection="#{depositoController.dSelecionado}" selectionMode="single" 
-                             rowKey="#{item.contaidConta}"
+                             rowKey="#{item.idDeposito}"
                              stripedRows="true"
                              paginator="true"
                              reflow="true"
@@ -51,7 +51,7 @@
                              currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros">    
 
                     <f:facet name="header">
-                        Usuarios cadastrados:
+                        Depositos para Aprovar:
                     </f:facet>
 
                     <p:column headerText="Código" filterBy="#{item.idDeposito}" filterMatchMode="contains" sortBy="#{item.idDeposito}">
@@ -60,6 +60,9 @@
                     <p:column headerText="Número da Conta" filterBy="#{item.contaidConta.nrConta}" filterMatchMode="contains" sortBy="#{item.contaidConta.nrConta}">
                         <h:outputText value="#{item.contaidConta.nrConta}" />
                     </p:column>
+                    <p:column headerText="Valor (R$)" filterBy="#{item.valor}" filterMatchMode="contains" sortBy="#{item.tipo}">
+                        <h:outputText value="#{item.valor}" />
+                    </p:column>
                     <p:column headerText="Data Deposito" filterBy="#{item.dataDeposito}" filterMatchMode="contains" sortBy="#{item.dataDeposito}">
                         <h:outputText value="#{item.dataDeposito}" />
                     </p:column>
@@ -67,7 +70,7 @@
                 </p:dataTable>
 
                 <p:contextMenu for="depositosEnvelope">
-                    <p:menuitem value="Aprovar Deposito" update="depositosEnvelope" icon="pi pi-times"
+                    <p:menuitem value="Aprovar Deposito" update="depositosEnvelope growl" icon="pi pi-check"
                                 action="#{depositoController.aprovarDeposito()}"/>
                 </p:contextMenu>
 
