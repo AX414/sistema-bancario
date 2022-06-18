@@ -65,7 +65,7 @@
                 <p:dataTable id="meusSaques" var="item" 
                              value="#{contaController.meusSaques}"
                              selection="#{contaController.sSelecionado}" selectionMode="single" 
-                             rowKey="#{item.idSaque}"
+                             rowKey="#{item.dataSaque}"
                              stripedRows="true"
                              paginator="true"
                              reflow="true"
@@ -76,13 +76,13 @@
                     <f:facet name="header">
                         Saques efetuados:
                     </f:facet>
-                    <p:column headerText="Código" filterBy="#{item.idSaque}" filterMatchMode="contains" sortBy="#{item.idSaque}">
+                    <p:column headerText="Código">
                         <h:outputText value="#{item.idSaque}" />
                     </p:column> 
-                    <p:column headerText="Valor (R$)" filterBy="#{item.valor}" filterMatchMode="contains" sortBy="#{item.valor}">
+                    <p:column headerText="Valor (R$)">
                         <h:outputText value="#{item.valor}" />
                     </p:column>
-                    <p:column headerText="Data do Saque" filterBy="#{item.dataSaque}" filterMatchMode="contains" sortBy="#{item.dataSaque}">
+                    <p:column headerText="Data do Saque">
                         <h:outputText value="#{item.dataSaque}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
@@ -107,21 +107,21 @@
                     <f:facet name="header">
                         Depósitos efetuados:
                     </f:facet>
-                    <p:column headerText="Código" filterBy="#{item.idDeposito}" filterMatchMode="contains" sortBy="#{item.idDeposito}">
+                    <p:column headerText="Código">
                         <h:outputText value="#{item.idDeposito}" />
                     </p:column> 
-                    <p:column headerText="Valor (R$)" filterBy="#{item.valor}" filterMatchMode="contains" sortBy="#{item.valor}">
+                    <p:column headerText="Valor (R$)">
                         <h:outputText value="#{item.valor}" />
                     </p:column>
-                    <p:column headerText="Tipo de Depósito" filterBy="#{item.tipo}" filterMatchMode="contains" sortBy="#{item.tipo}">
+                    <p:column headerText="Tipo de Depósito">
                         <h:outputText value="#{item.tipo}" />
                     </p:column>
-                    <p:column headerText="Data do Depósito" filterBy="#{item.dataDeposito}" filterMatchMode="contains" sortBy="#{item.dataDeposito}">
+                    <p:column headerText="Data do Depósito">
                         <h:outputText value="#{item.dataDeposito}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Data da Autorização" filterBy="#{item.dataAutorizacao}" filterMatchMode="contains" sortBy="#{item.dataAutorizacao}">
+                    <p:column headerText="Data da Autorização">
                         <h:outputText value="#{item.dataAutorizacao}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
@@ -146,19 +146,19 @@
                     <f:facet name="header">
                         Transferências Efetuadas:
                     </f:facet>
-                    <p:column headerText="Código" filterBy="#{item.idTransferencia}" filterMatchMode="contains" sortBy="#{item.idTransferencia}">
+                    <p:column headerText="Código">
                         <h:outputText value="#{item.idTransferencia}" />
                     </p:column> 
-                    <p:column headerText="Valor (R$)" filterBy="#{item.valor}" filterMatchMode="contains" sortBy="#{item.valor}">
+                    <p:column headerText="Valor (R$)">
                         <h:outputText value="#{item.valor}" />
                     </p:column>
-                    <p:column headerText="Número da Conta de Destino" filterBy="#{item.idConta}" filterMatchMode="contains" sortBy="#{item.idConta}">
+                    <p:column headerText="Número da Conta de Destino">
                         <h:outputText value="#{item.idConta}" />
                     </p:column>
-                    <p:column headerText="Agência da Conta de Destino" filterBy="#{item.idAgencia}" filterMatchMode="contains" sortBy="#{item.idAgencia}">
+                    <p:column headerText="Agência da Conta de Destino">
                         <h:outputText value="#{item.idAgencia}" />
                     </p:column>
-                    <p:column headerText="Data da Transferência" filterBy="#{item.data}" filterMatchMode="contains" sortBy="#{item.data}">
+                    <p:column headerText="Data da Transferência">
                         <h:outputText value="#{item.data}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
