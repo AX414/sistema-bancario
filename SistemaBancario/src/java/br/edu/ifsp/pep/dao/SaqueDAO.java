@@ -43,7 +43,7 @@ public class SaqueDAO {
         return em.createQuery("Select s FROM Saque s", Saque.class).getResultList();
     }
 
-    public List<Saque> buscarTodosSaquesPorConta(Conta idConta) {
+    public List<Saque> buscarTodosPorConta(Conta idConta) {
         TypedQuery<Saque> query = em.createQuery("Select s FROM Saque s WHERE s.contaidConta = :idConta", Saque.class);
         query.setParameter("idConta", idConta);
         try {

@@ -7,9 +7,15 @@ package br.edu.ifsp.pep.controller;
 
 import br.edu.ifsp.pep.dao.AgenciaDAO;
 import br.edu.ifsp.pep.dao.ContaDAO;
+import br.edu.ifsp.pep.dao.DepositoDAO;
+import br.edu.ifsp.pep.dao.SaqueDAO;
+import br.edu.ifsp.pep.dao.TransferenciaDAO;
 import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Agencia;
 import br.edu.ifsp.pep.model.Conta;
+import br.edu.ifsp.pep.model.Deposito;
+import br.edu.ifsp.pep.model.Saque;
+import br.edu.ifsp.pep.model.Transferencia;
 import br.edu.ifsp.pep.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
@@ -34,13 +40,25 @@ public class ContaController implements Serializable {
     @Inject
     private AgenciaDAO agenciaDAO;
     @Inject
+    private TransferenciaDAO transferenciaDAO;
+    @Inject
+    private DepositoDAO depositoDAO;
+    @Inject
+    private SaqueDAO saqueDAO;
+    @Inject
     private UsuarioController usuarioController;
 
     private Conta conta;
     private Conta cSelecionada;
     private Conta cAtivadaSelecionada;
     private Conta cDesativadaSelecionada;
-        
+    
+    private Deposito dSelecionado;
+    private Saque sSelecionado;
+    private Transferencia tSelecionada;
+    
+    private String nrConta;
+    private String senha;
     private String nrAgencia;
     private String cpf;
     private String estado;
@@ -49,12 +67,18 @@ public class ContaController implements Serializable {
     private List<Conta> contasDesativadas;
     private List<Conta> minhasContasAtivadas;
     private List<Conta> minhasContasDesativadas;
+    private List<Transferencia> minhasTransferencias;
+    private List<Deposito> meusDepositos;
+    private List<Saque> meusSaques;
 
     public ContaController() {
         System.out.println("construtor conta.");
         this.cSelecionada = null;
         this.cAtivadaSelecionada = null;
         this.cDesativadaSelecionada = null;
+        this.dSelecionado = null;
+        this.sSelecionado = null;
+        this.tSelecionada = null;
 
         this.conta = new Conta();
     }
@@ -81,6 +105,30 @@ public class ContaController implements Serializable {
 
     public void setcSelecionada(Conta cSelecionada) {
         this.cSelecionada = cSelecionada;
+    }
+
+    public Deposito getdSelecionado() {
+        return dSelecionado;
+    }
+
+    public void setdSelecionado(Deposito dSelecionado) {
+        this.dSelecionado = dSelecionado;
+    }
+
+    public Saque getsSelecionado() {
+        return sSelecionado;
+    }
+
+    public void setsSelecionado(Saque sSelecionado) {
+        this.sSelecionado = sSelecionado;
+    }
+
+    public Transferencia gettSelecionada() {
+        return tSelecionada;
+    }
+
+    public void settSelecionada(Transferencia tSelecionada) {
+        this.tSelecionada = tSelecionada;
     }
 
     public Conta getcAtivadaSelecionada() {
@@ -123,7 +171,7 @@ public class ContaController implements Serializable {
 
     public List<Conta> getMinhasContasAtivadas() {
         if (minhasContasAtivadas == null) {
-            this.minhasContasAtivadas = contaDAO.buscarTodasMinhasContas(usuarioController.getUsuarioLogado(),"Ativada");
+            this.minhasContasAtivadas = contaDAO.buscarTodasMinhasContas(usuarioController.getUsuarioLogado(), "Ativada");
         }
         return minhasContasAtivadas;
     }
@@ -144,6 +192,30 @@ public class ContaController implements Serializable {
         this.minhasContasDesativadas = minhasContasDesativadas;
     }
 
+    public List<Transferencia> getMinhasTransferencias() {
+        return minhasTransferencias;
+    }
+
+    public void setMinhasTransferencias(List<Transferencia> minhasTransferencias) {
+        this.minhasTransferencias = minhasTransferencias;
+    }
+
+    public List<Deposito> getMeusDepositos() {
+        return meusDepositos;
+    }
+
+    public void setMeusDepositos(List<Deposito> meusDepositos) {
+        this.meusDepositos = meusDepositos;
+    }
+
+    public List<Saque> getMeusSaques() {
+        return meusSaques;
+    }
+
+    public void setMeusSaques(List<Saque> meusSaques) {
+        this.meusSaques = meusSaques;
+    }
+
     public UsuarioController getUsuarioController() {
         return usuarioController;
     }
@@ -158,6 +230,22 @@ public class ContaController implements Serializable {
 
     public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
+    }
+
+    public String getNrConta() {
+        return nrConta;
+    }
+
+    public void setNrConta(String nrConta) {
+        this.nrConta = nrConta;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getNrAgencia() {
@@ -246,6 +334,34 @@ public class ContaController implements Serializable {
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Conta Ativada");
         } else {
             addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Selecione uma conta para reativar");
+        }
+    }
+
+    public void verificarMovimentacoes() {
+        Conta contaRetornada = contaDAO.buscarPorNrSenhaId(nrConta, senha, usuarioController.getUsuarioLogado());
+        int erro = 0;
+
+        if (contaRetornada == null) {
+            erro = 1;
+            addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Você não possui nenhuma conta com esses dados. Tente novamente");
+        } else {
+            System.out.println("Número da Conta: " + contaRetornada.getNrConta());
+            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Conta encontrada.");
+
+            if (erro == 0) {
+                if (minhasTransferencias == null) {
+                    this.minhasTransferencias = transferenciaDAO.buscarTodasPorConta(contaRetornada);
+                }
+                if (meusDepositos == null) {
+                    this.meusDepositos = depositoDAO.buscarTodosPorConta(contaRetornada);
+                }
+                if (meusSaques == null) {
+                    this.meusSaques = saqueDAO.buscarTodosPorConta(contaRetornada);
+                }
+                addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Movimentações Carregadas.");
+            }else{
+                addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Não foi possível listar todas as movimentações da conta.");
+            }
         }
     }
 

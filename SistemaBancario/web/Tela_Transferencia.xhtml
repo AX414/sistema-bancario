@@ -16,7 +16,7 @@
                 <p:submenu label="Conta" icon="pi pi-fw pi-user">
                     <p:menuitem value="Minhas Contas"  url="Tela_Lista_Minhas_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
-                        <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
+                        <p:menuitem value="Relatório" url="Tela_Extrato_Usuario.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
                 </p:submenu>
 
@@ -41,7 +41,6 @@
                 <center>
                     <h1>Efetuar Transferência</h1>
                 </center> 
-                <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
                     <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
                         <div class="p-field p-grid">
                             <label for="nrContaRemetente" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da sua Conta</label>
@@ -86,7 +85,6 @@
                                              value="Transferir" action="#{transferenciaController.efetuarTransferencia()}" update="formulario growl"/>
                         </div>
                     </div>
-                </div>
             </div>
         </h:form>
     </h:body>

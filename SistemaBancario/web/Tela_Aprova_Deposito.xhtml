@@ -16,7 +16,7 @@
                 <p:submenu label="Conta" icon="pi pi-fw pi-user">
                     <p:menuitem value="Minhas Contas"  url="Tela_Lista_Minhas_Contas.xhtml" icon="pi pi-fw pi-id-card"/>
                     <p:submenu label="Extrato Bancário" icon="pi pi-fw pi-plus">
-                        <p:menuitem value="Relatório" url="Tela_Extrato_Cliente.xhtml" icon="pi pi-fw pi-book"/>
+                        <p:menuitem value="Relatório" url="Tela_Extrato_Usuario.xhtml" icon="pi pi-fw pi-book"/>
                     </p:submenu>
                 </p:submenu>
 
@@ -64,7 +64,9 @@
                         <h:outputText value="#{item.valor}" />
                     </p:column>
                     <p:column headerText="Data Deposito" filterBy="#{item.dataDeposito}" filterMatchMode="contains" sortBy="#{item.dataDeposito}">
-                        <h:outputText value="#{item.dataDeposito}" />
+                        <h:outputText value="#{item.dataDeposito}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
                     </p:column>
 
                 </p:dataTable>
