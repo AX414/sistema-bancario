@@ -130,7 +130,7 @@ public class DepositoController implements Serializable {
     }
 
     public void efetuarDeposito() {
-        Conta contaRetornada = contaDAO.buscarContaPorNrSenhaId(nrConta, senha, usuarioController.getUsuarioLogado());
+        Conta contaRetornada = contaDAO.buscarPorNrSenhaId(nrConta, senha, usuarioController.getUsuarioLogado());
         double saldoRetornado;
         int erro = 0;
 

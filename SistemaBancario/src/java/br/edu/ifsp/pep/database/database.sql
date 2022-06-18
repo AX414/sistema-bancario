@@ -147,6 +147,7 @@ ENGINE = InnoDB;
 
 CREATE INDEX fk_Transferencia_Conta1_idx ON Transferencia (Conta_idConta ASC) VISIBLE;
 
+SELECT * FROM Transferencia;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

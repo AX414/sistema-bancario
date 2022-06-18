@@ -45,19 +45,19 @@
                     <div class="p-field p-grid">
                         <label for="nrConta" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="nrConta" value="#{contaController.conta.nrConta}"/>
+                            <p:inputText id="nrConta" value="#{contaController.conta.nrConta}" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="cpf" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">CPF</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputMask id="cpf" value="#{contaController.cpf}" mask="999.999.999-99" type="text" />
+                            <p:inputMask id="cpf" value="#{contaController.cpf}" mask="999.999.999-99" type="text" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="estado" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Estado</label>
                         <div class="p-col-12 p-md-10">
-                            <p:selectOneMenu id="estado" value="#{contaController.estado}">
+                            <p:selectOneMenu id="estado" value="#{contaController.estado}" required="true">
                                 <f:selectItem itemLabel="AC" itemValue="AC"/>
                                 <f:selectItem itemLabel="AL" itemValue="AL"/>
                                 <f:selectItem itemLabel="AP" itemValue="AP"/>
@@ -103,13 +103,13 @@
                     <div class="p-field p-grid">
                         <label for="nrAgencia" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Agência</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="nrAgencia" value="#{contaController.nrAgencia}"/>
+                            <p:inputText id="nrAgencia" value="#{contaController.nrAgencia}" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="tipo" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Tipo de Conta</label>
                         <div class="p-col-12 p-md-10">
-                            <p:selectOneMenu id="option" value="#{contaController.conta.tipo}">
+                            <p:selectOneMenu id="option" value="#{contaController.conta.tipo}" required="true">
                                 <f:selectItem itemLabel="Comum" itemValue="Comum"/>
                                 <f:selectItem itemLabel="Especial" itemValue="Especial"/>
                             </p:selectOneMenu>
@@ -118,7 +118,7 @@
                     <div class="p-field p-grid">
                         <label for="limite" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Limite</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputNumber id="limite" value="#{contaController.conta.limite}" symbol="R$ "/>
+                            <p:inputNumber id="limite" value="#{contaController.conta.limite}" symbol="R$ " required="true"/>
                         </div>
                     </div>
                     <div class="botao">

@@ -5,13 +5,10 @@
  */
 package br.edu.ifsp.pep.controller;
 
-import br.edu.ifsp.pep.dao.AgenciaDAO;
 import br.edu.ifsp.pep.dao.ContaDAO;
 import br.edu.ifsp.pep.dao.SaqueDAO;
-import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Conta;
 import br.edu.ifsp.pep.model.Saque;
-import br.edu.ifsp.pep.model.Usuario;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -126,7 +123,7 @@ public class SaqueController implements Serializable {
     }
 
     public void efetuarSaque() {
-        Conta contaRetornada = contaDAO.buscarContaPorNrSenhaId(nrConta, senha, usuarioController.getUsuarioLogado());
+        Conta contaRetornada = contaDAO.buscarPorNrSenhaId(nrConta, senha, usuarioController.getUsuarioLogado());
         double saldoRetornado;
         double limiteRetornado;
         int erro = 0;
@@ -161,7 +158,7 @@ public class SaqueController implements Serializable {
             } else if (contaRetornada.getTipo().equals("Especial")) {
                 if (valor >= saldoRetornado + limiteRetornado) {
                     erro = 1;
-                    addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "O valor inserido ultrapassa o total presente na conta e o limite. Tente novamente");
+                    addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "O valor inserido ultrapassa o saldo total presente na conta e o limite. Tente novamente");
                 } else {
 
                     if (valor > saldoRetornado) {

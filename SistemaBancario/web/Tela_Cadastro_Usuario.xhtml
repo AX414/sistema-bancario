@@ -45,13 +45,13 @@
                     <div class="p-field p-grid">
                         <label for="nome" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nome</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="nome" value="#{usuarioController.usuario.nome}"/>
+                            <p:inputText id="nome" value="#{usuarioController.usuario.nome}" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="cpf" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">CPF</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputMask id="cpf" value="#{usuarioController.usuario.cpf}" mask="999.999.999-99" type="text" />
+                            <p:inputMask id="cpf" value="#{usuarioController.usuario.cpf}" mask="999.999.999-99" type="text" required="true" />
                         </div>
                     </div>
                     <div class="p-field p-grid">
@@ -69,7 +69,7 @@
                     <div class="p-field p-grid">
                         <label for="nivelAcesso" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nível de Acesso</label>
                         <div class="p-col-12 p-md-10">
-                            <p:selectOneMenu id="option" value="#{usuarioController.usuario.nivelAcesso}">
+                            <p:selectOneMenu id="option" value="#{usuarioController.usuario.nivelAcesso}" required="true">
                                 <f:selectItem itemLabel="Cliente" itemValue="Cliente"/>
                                 <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
                                 <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
@@ -79,7 +79,7 @@
                     <div class="p-field p-grid">
                         <label for="estado" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Estado</label>
                         <div class="p-col-12 p-md-10">
-                            <p:selectOneMenu id="estado" value="#{usuarioController.usuario.estado}">
+                            <p:selectOneMenu id="estado" value="#{usuarioController.usuario.estado}" required="true">
                                 <f:selectItem itemLabel="AC" itemValue="AC"/>
                                 <f:selectItem itemLabel="AL" itemValue="AL"/>
                                 <f:selectItem itemLabel="AP" itemValue="AP"/>
@@ -113,31 +113,31 @@
                     <div class="p-field p-grid">
                         <label for="bairro" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Cidade</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="cidade" value="#{usuarioController.usuario.cidade}" type="text" />
+                            <p:inputText id="cidade" value="#{usuarioController.usuario.cidade}" type="text" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="bairro" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Bairro</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="bairro" value="#{usuarioController.usuario.bairro}" type="text" />
+                            <p:inputText id="bairro" value="#{usuarioController.usuario.bairro}" type="text" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="rua" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Rua</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="rua" value="#{usuarioController.usuario.rua}" type="text" />
+                            <p:inputText id="rua" value="#{usuarioController.usuario.rua}" type="text" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="numero" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numero</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="numero" value="#{usuarioController.usuario.numero}" type="text" />
+                            <p:inputText id="numero" value="#{usuarioController.usuario.numero}" type="text" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
                         <label for="contato" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Contato</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="contato" value="#{usuarioController.usuario.contato}" type="text" />
+                            <p:inputText id="contato" value="#{usuarioController.usuario.contato}" type="text" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">

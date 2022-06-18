@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Efetuar Transferência</title>
+        <title>Cadastro de Agência</title>
         <h:outputStylesheet name="/css/primeflex.min.css" />
         <h:outputStylesheet name="/css/style.css" />
     </h:head>
@@ -35,7 +35,60 @@
                 </f:facet>
             </p:menubar>
         </h:form>
+        <h:form id="formulario">
+            <p:growl id="growl" showDetail="true"/>
+            <div class="card">
+                <center>
+                    <h1>Efetuar Transferência</h1>
+                </center> 
+                <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
+                    <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
+                        <div class="p-field p-grid">
+                            <label for="nrContaRemetente" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da sua Conta</label>
+                            <div class="p-col-12 p-md-10">
+                                <p:inputText id="nrContaRemetente" value="#{transferenciaController.nrContaRemetente}" required="true"/>
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="senha" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Digite a Senha da Sua Conta</label>
+                            <div class="p-col-12 p-md-10">
+                                <p:password id="senha" value="#{transferenciaController.senhaContaRemetente}" required="true"/>
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="nrContaDestino" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta de Destino</label>
+                            <div class="p-col-12 p-md-10">
+                                <p:inputText id="nrContaDestino" value="#{transferenciaController.nrContaDestino}"/>
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="nrAgenciaDestino" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Agência da Conta de Destino</label>
+                            <div class="p-col-12 p-md-10">
+                                <p:inputText id="nrAgenciaDestino" value="#{transferenciaController.nrAgenciaDestino}" type="text" required="true"/>
+                            </div>
+                        </div>
+                            <p><b>Dono da Conta de Destino:</b> #{transferenciaController.nomeUsuarioContaDestino}</p>
+                        <div class="botao">
+                            <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary" 
+                                             value="Pesquisar Dono da Conta de Destino" action="#{transferenciaController.retornaNomeUsuarioContaDestino()}" 
+                                             update="formulario growl"/>
+                        </div>
+                        <hr></hr>
+                        <div class="p-field p-grid">
+                            <label for="valor" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Valor (R$)</label>
+                            <div class="p-col-12 p-md-10">
+                                <p:inputNumber id="valor" value="#{transferenciaController.valor}" symbol="R$ " required="true"/>
+                            </div>
+                        </div>
+
+                        <div class="botao">
+                            <p:commandButton style="border-radius:25px;" class="ui-button-outlined ui-button-primary" 
+                                             value="Transferir" action="#{transferenciaController.efetuarTransferencia()}" update="formulario growl"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
     </h:body>
 </html>
-
 

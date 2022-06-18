@@ -43,9 +43,9 @@
                 </center> 
                 <div class="ui-fluid" style="border:0px none; background-color:transparent;margin-left: 10%;margin-right: 10%;">
                     <div class="p-field p-grid">
-                        <label for="nome" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
+                        <label for="nrConta" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Número da Conta</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputText id="nome" value="#{saqueController.nrConta}"/>
+                            <p:inputText id="nrConta" value="#{saqueController.nrConta}" required="true"/>
                         </div>
                     </div>
                     <div class="p-field p-grid">
@@ -57,7 +57,7 @@
                     <div class="p-field p-grid">
                         <label for="valor" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Valor (R$)</label>
                         <div class="p-col-12 p-md-10">
-                            <p:inputNumber id="valor" value="#{saqueController.valor}" symbol="R$ "/>
+                            <p:inputNumber id="valor" value="#{saqueController.valor}" symbol="R$ " required="true"/>
                         </div>
                     </div>
                     <div class="botao">

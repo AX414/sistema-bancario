@@ -7,6 +7,7 @@ package br.edu.ifsp.pep.dao;
 
 import br.edu.ifsp.pep.model.Conta;
 import br.edu.ifsp.pep.model.Usuario;
+import br.edu.ifsp.pep.model.Agencia;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -63,13 +64,27 @@ public class ContaDAO {
         }
     }
 
-    public Conta buscarContaPorNrSenhaId(String nrConta, String senha, Usuario idUsuario) {
+    public Conta buscarPorNrSenhaId(String nrConta, String senha, Usuario idUsuario) {
         TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c "
                 + "WHERE c.nrConta = :nrConta AND c.senha = :senha "
                 + "AND c.usuarioidUsuario = :idUsuario", Conta.class);
         query.setParameter("nrConta", nrConta);
         query.setParameter("senha", senha);
         query.setParameter("idUsuario", idUsuario);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public Conta buscarPorNrContaIdAgencia(String nrConta, Agencia idAgencia) {
+        TypedQuery<Conta> query = em.createQuery("Select c FROM Conta c "
+                + "WHERE c.nrConta = :nrConta "
+                + "AND c.agenciaidAgencia = :idAgencia", Conta.class);
+        query.setParameter("nrConta", nrConta);
+        query.setParameter("idAgencia", idAgencia);
         try {
             return query.getSingleResult();
         } catch (NoResultException ex) {
