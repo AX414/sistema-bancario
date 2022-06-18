@@ -35,13 +35,7 @@ public class SaqueController implements Serializable {
     @Inject
     private ContaDAO contaDAO;
     @Inject
-    private UsuarioDAO usuarioDAO;
-    @Inject
-    private AgenciaDAO agenciaDAO;
-    @Inject
     private UsuarioController usuarioController;
-    @Inject
-    private ContaController contaController;
 
     private Saque saque;
     private Saque sSelecionado;
@@ -133,12 +127,11 @@ public class SaqueController implements Serializable {
 
     public void efetuarSaque() {
         Conta contaRetornada = contaDAO.buscarContaPorNrSenhaId(nrConta, senha, usuarioController.getUsuarioLogado());
-        double saldoRetornado = 0;
-        double limiteRetornado = 0;
+        double saldoRetornado;
+        double limiteRetornado;
         int erro = 0;
 
         if (contaRetornada == null) {
-            erro = 1;
             addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Você não possui nenhuma conta com esses dados. Tente novamente");
         } else {
             if (contaRetornada.getStatus().equals("Desativada")) {

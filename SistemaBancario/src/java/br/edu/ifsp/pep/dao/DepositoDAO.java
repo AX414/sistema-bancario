@@ -9,7 +9,9 @@ import br.edu.ifsp.pep.model.Deposito;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -38,5 +40,16 @@ public class DepositoDAO {
 
     public List<Deposito> buscarTodos() {
         return em.createQuery("Select d FROM Deposito d",Deposito.class).getResultList();
+    }
+
+    public List<Deposito> buscarTodosPorTipo(String tipo) {
+        TypedQuery<Deposito> query = em.createQuery("Select d FROM Deposito d WHERE d.tipo = :tipo", Deposito.class);
+        query.setParameter("tipo", tipo);
+        try {
+            return query.getResultList();
+        } catch (NoResultException ex) {
+            System.out.println(ex);
+            return null;
+        }
     }
 }
