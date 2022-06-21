@@ -52,11 +52,11 @@ public class ContaController implements Serializable {
     private Conta cSelecionada;
     private Conta cAtivadaSelecionada;
     private Conta cDesativadaSelecionada;
-    
+
     private Deposito dSelecionado;
     private Saque sSelecionado;
     private Transferencia tSelecionada;
-    
+
     private String nrConta;
     private String senha;
     private String nrAgencia;
@@ -275,8 +275,11 @@ public class ContaController implements Serializable {
     public void adicionar() {
         Agencia agenciaRetornada = agenciaDAO.buscarPorNrAgencia(nrAgencia);
         Usuario usuarioRetornado = usuarioDAO.buscarPorCPFEstado(cpf, estado, "Cliente");
+        
+        int erros = 0;
 
         if (agenciaRetornada == null) {
+            erros = 1;
             addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "A agencia informada não existe. Tente novamente");
         } else {
             System.out.println("Agência: " + agenciaRetornada.getNome());
@@ -284,33 +287,51 @@ public class ContaController implements Serializable {
         }
 
         if (usuarioRetornado == null) {
+            erros = 1;
             addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Os dados do usuário não constam no banco de dados. Tente novamente");
         } else {
             System.out.println("Usuario: " + usuarioRetornado.getNome());
             addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Usuário encontrado.");
         }
-
-        //Anula os históricos de movimentações
-        conta.setListaDepositos(null);
-        conta.setListaSaques(null);
-        conta.setListaTransferencias(null);
-
-        conta.setSaldo(0);
-        conta.setStatus("Ativada");
-        conta.setUsuarioidUsuario(usuarioRetornado);
-        conta.setAgenciaidAgencia(agenciaRetornada);
-
-        if (conta.getTipo().equals("Comum")) {
-            if (conta.getLimite() != 0) {
-                conta.setLimite(0);
-                addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Contas Comuns não possuem limite, o valor do limite é R$ 0.");
-            }
+        
+        /*
+        //aparentemente o sistema consegue criar contas com o mesmo nr
+        //tentei consertar, mas não funcionou, não sei porque
+        
+        Conta contaRetornada = contaDAO.buscarPorNrContaIdAgencia(nrConta, agenciaRetornada);
+        if(contaRetornada != null){
+            erros = 1;
+            System.out.println("Conta retornada: "+contaRetornada.getNrConta());
+            System.out.println("O número da conta já existe.");
+            addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "A conta informada já existe.");
         }
+        */
+        
+        if (erros == 0) {
+            //Anula os históricos de movimentações
+            conta.setListaDepositos(null);
+            conta.setListaSaques(null);
+            conta.setListaTransferencias(null);
+            
+            conta.setSaldo(0);
+            conta.setStatus("Ativada");
+            conta.setUsuarioidUsuario(usuarioRetornado);
+            conta.setAgenciaidAgencia(agenciaRetornada);
 
-        contaDAO.insert(conta);
-        this.contasAtivadas = null;
-        System.out.println("adicionou uma conta na lista.");
-        addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
+            if (conta.getTipo().equals("Comum")) {
+                if (conta.getLimite() != 0) {
+                    conta.setLimite(0);
+                    addMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Contas Comuns não possuem limite, o valor do limite é R$ 0.");
+                }
+            }
+
+            contaDAO.insert(conta);
+            this.contasAtivadas = null;
+            System.out.println("adicionou uma conta na lista.");
+            addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Cadastro realizado.");
+        }else{
+            addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Não foi possível cadastrar a conta. Verifique se os dados da agência e do usuário e tente novamente.");
+        }
     }
 
     public void desativarConta() {
@@ -359,7 +380,7 @@ public class ContaController implements Serializable {
                     this.meusSaques = saqueDAO.buscarTodosPorConta(contaRetornada);
                 }
                 addMessage(FacesMessage.SEVERITY_INFO, "Informação", "Movimentações Carregadas.");
-            }else{
+            } else {
                 addMessage(FacesMessage.SEVERITY_ERROR, "ERRO", "Não foi possível listar todas as movimentações da conta.");
             }
         }

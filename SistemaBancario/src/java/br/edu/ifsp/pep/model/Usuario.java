@@ -207,6 +207,7 @@ public class Usuario implements Serializable {
     }
 
     public ArrayList<Conta> getListaConta() {
+
         return listaConta;
     }
 
