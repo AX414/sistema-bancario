@@ -1,17 +1,17 @@
 ## Saque
 
-> Na conta comum é realizada se tiver esse saldo
-> Na conta especial é realizada até o valor do limite (saldo + limite)
+* Na conta comum é realizada se tiver esse saldo
+* Na conta especial é realizada até o valor do limite (saldo + limite)
 
 ## Deposito
 
-> Tipo de deposito diz se ele vai ser com um funcionário e o valor fica disponível na hora, ou no caixa com o envelope e o valor só é disponibilizado depois do funcionário conferir.
+* Tipo de deposito diz se ele vai ser com um funcionário e o valor fica disponível na hora, ou no caixa com o envelope e o valor só é disponibilizado depois do funcionário conferir.
 
 
 ## Transferencia.
 
-> Na conta comum é realizada se tiver esse saldo. 
-> Na conta especial é realizada até o valor do limite (saldo + limite).
+* Na conta comum é realizada se tiver esse saldo. 
+* Na conta especial é realizada até o valor do limite (saldo + limite).
 
 
 **O sistema deve permitir:**
