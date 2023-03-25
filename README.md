@@ -19,8 +19,3 @@
 * O cliente tirar um extrato por período.
 * O funcionário autorizar os depósitos feitos pelo envelope.
 * O funcionário imprimir um relatório com todas as contas que estão utilizando o valor do limite.
-==============================================================================
-
-
-
-- esqueci o número da casa no usuario
